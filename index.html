@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Maike HQ">
+<meta name="theme-color" content="#150D06">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Maike HQ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #150D06;
+  --espresso: #2C1E12;
+  --deep: #4A3220;
+  --brown: #7A5C3A;
+  --caramel: #A07850;
+  --latte: #C4A882;
+  --beige: #D4BFA0;
+  --sand: #E8D9C5;
+  --w1: #F5EFE6;
+  --w0: #FAF7F2;
+  --t0: #F0B898;
+  --t1: #C8714A;
+  --t2: #A05030;
+  --t3: #7A3A1E;
+  --surface: rgba(250,247,242,0.04);
+  --surface-2: rgba(250,247,242,0.07);
+  --border: rgba(250,247,242,0.08);
+  --border-hover: rgba(250,247,242,0.14);
+  --green: #6ec87a;
+  --green-soft: rgba(110,200,122,0.12);
+  --red: #e8635a;
+  --red-soft: rgba(232,99,90,0.12);
+  --yellow: #e8c55a;
+  --yellow-soft: rgba(232,197,90,0.12);
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --tab-h: 72px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-top: env(safe-area-inset-top, 0px);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html {
+  background: var(--ink);
+  height: 100%;
+  overscroll-behavior: none;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--w0);
+  line-height: 1.5;
+  height: 100%;
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  top: 0; left: 0;
+}
+
+/* Ambient background */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 50% at 15% 5%, rgba(200,113,74,.14) 0%, transparent 65%),
+    radial-gradient(ellipse 45% 40% at 88% 78%, rgba(160,80,48,.09) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 35% at 50% 115%, rgba(74,50,32,.6) 0%, transparent 70%);
+}
+
+/* Grain texture */
+body::after {
+  content: ''; position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: .03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px;
+}
+
+/* ── FLOATING ORBS ─────────────────────────── */
+.orb { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; filter: blur(60px); animation: float 14s ease-in-out infinite; }
+.orb-1 { width: 280px; height: 280px; background: radial-gradient(circle, rgba(200,113,74,.14) 0%, transparent 70%); top: -5%; left: -8%; animation-delay: 0s; }
+.orb-2 { width: 180px; height: 180px; background: radial-gradient(circle, rgba(240,184,152,.09) 0%, transparent 70%); top: 38%; right: -4%; animation-delay: -5s; }
+.orb-3 { width: 220px; height: 220px; background: radial-gradient(circle, rgba(160,80,48,.11) 0%, transparent 70%); bottom: 12%; left: 18%; animation-delay: -9s; }
+@keyframes float { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-24px) scale(1.04); } }
+
+/* ── APP SHELL ─────────────────────────────── */
+#app {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-top: var(--safe-top);
+}
+
+/* ── SCROLL PANELS ─────────────────────────── */
+.tab-panel {
+  display: none;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  padding: 0 16px calc(var(--tab-h) + var(--safe-bottom) + 16px);
+}
+.tab-panel.active { display: block; }
+.tab-panel::-webkit-scrollbar { display: none; }
+
+/* ── BOTTOM TAB BAR ────────────────────────── */
+#tab-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: calc(var(--tab-h) + var(--safe-bottom));
+  padding-bottom: var(--safe-bottom);
+  background: rgba(21,13,6,0.88);
+  backdrop-filter: blur(24px) saturate(1.5);
+  -webkit-backdrop-filter: blur(24px) saturate(1.5);
+  border-top: 1px solid var(--border);
+  z-index: 100;
+  display: flex;
+  align-items: flex-start;
+}
+
+.tab-list {
+  display: flex;
+  width: 100%;
+  height: var(--tab-h);
+}
+
+.tab-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 44px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--brown);
+  transition: color 0.2s;
+  position: relative;
+  padding-top: 10px;
+}
+
+.tab-btn.active { color: var(--t0); }
+
+.tab-btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 28px; height: 2px;
+  background: var(--t1);
+  border-radius: 0 0 2px 2px;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.tab-btn.active::before { transform: translateX(-50%) scaleX(1); }
+
+.tab-icon { line-height: 1; display: flex; align-items: center; justify-content: center; }
+.tab-icon svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.tab-label { font-family: var(--font-body); font-size: 10px; font-weight: 500; letter-spacing: 0.02em; }
+
+/* ── CARDS ─────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 20px;
+  border: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-title {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--t1);
+  margin-bottom: 14px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.card-header .card-title { margin-bottom: 0; }
+
+.badge {
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+.badge-green { background: var(--green-soft); color: var(--green); }
+.badge-red { background: var(--red-soft); color: var(--red); }
+.badge-yellow { background: var(--yellow-soft); color: var(--yellow); }
+.badge-terra { background: rgba(200,113,74,0.12); color: var(--t0); }
+
+/* ── MORNING TAB ────────────────────────────── */
+.morning-header {
+  padding: 24px 0 8px;
+  position: relative;
+}
+
+.morning-greeting {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--w0);
+  line-height: 1.2;
+}
+
+.morning-greeting span {
+  background: linear-gradient(135deg, var(--t0) 0%, var(--t1) 55%, var(--t2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.morning-date {
+  font-size: 13px;
+  color: var(--latte);
+  font-weight: 300;
+  margin-top: 4px;
+}
+
+/* Weather card */
+.weather-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.weather-temp-block { display: flex; align-items: baseline; gap: 6px; }
+.weather-emoji { font-size: 36px; }
+.weather-temp-val {
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--w0);
+}
+.weather-meta { flex: 1; }
+.weather-desc-text { font-size: 14px; color: var(--sand); margin-bottom: 6px; }
+.weather-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.weather-pill {
+  font-size: 11px;
+  color: var(--latte);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+/* Today card */
+.today-post {
+  background: rgba(200,113,74,0.08);
+  border: 1px solid rgba(200,113,74,0.25);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  margin-bottom: 10px;
+}
+.today-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--t1);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.today-post-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--w0);
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+.today-post-type {
+  display: inline-block;
+  font-size: 11px;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+.type-reel { background: rgba(200,113,74,0.15); color: var(--t0); }
+.type-carousel { background: rgba(196,168,130,0.12); color: var(--beige); }
+
+/* 3-day preview */
+.days-row { display: flex; gap: 8px; }
+.day-chip {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 8px;
+  text-align: center;
+}
+.day-chip.today-chip { border-color: rgba(200,113,74,0.3); }
+.day-chip-date { font-size: 10px; color: var(--latte); margin-bottom: 4px; }
+.day-chip-title { font-size: 11px; color: var(--sand); font-weight: 500; line-height: 1.3; }
+.day-chip-badge { margin-top: 5px; }
+
+/* Stats strip */
+.stats-strip { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+.stats-strip::-webkit-scrollbar { display: none; }
+.stat-chip {
+  flex: 0 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  text-align: center;
+  min-width: 90px;
+}
+.stat-chip-val {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--w0);
+}
+.stat-chip-label { font-size: 10px; color: var(--latte); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+.stat-chip-delta { font-size: 11px; margin-top: 3px; font-weight: 500; }
+.delta-up { color: var(--green); }
+.delta-down { color: var(--red); }
+
+/* Vision strip */
+.vision-strip {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--sand);
+  font-weight: 300;
+  font-style: italic;
+  padding-left: 14px;
+  border-left: 2px solid var(--t1);
+}
+
+/* ── BUSINESS TAB ───────────────────────────── */
+.ig-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ig-stat-cell {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 12px;
+}
+.ig-stat-val {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--w0);
+}
+.ig-stat-label { font-size: 11px; color: var(--latte); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+.ig-stat-note { font-size: 11px; color: var(--t0); margin-top: 4px; }
+
+/* Funnel */
+.funnel-stages { display: flex; flex-direction: column; gap: 8px; }
+.funnel-stage {
+  position: relative;
+  padding: 12px 14px;
+  background: rgba(250,247,242,0.02);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.funnel-bar { position: absolute; left: 0; top: 0; bottom: 0; opacity: 0.12; border-radius: var(--radius-sm); }
+.funnel-inner { position: relative; display: flex; justify-content: space-between; align-items: center; }
+.funnel-label { font-size: 13px; font-weight: 500; color: var(--sand); }
+.funnel-value { font-family: var(--font-display); font-size: 18px; font-weight: 700; letter-spacing: -0.02em; }
+
+/* Progress bars */
+.progress-list { display: flex; flex-direction: column; gap: 14px; }
+.progress-item-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--sand); margin-bottom: 6px; }
+.progress-item-val { font-family: var(--font-display); font-weight: 600; font-size: 13px; }
+.progress-track { height: 6px; background: rgba(250,247,242,0.05); border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 3px; transition: width 0.6s cubic-bezier(0.34,1.2,0.64,1); }
+
+/* Countdown */
+.countdown-block { text-align: center; padding: 16px 0; }
+.countdown-val {
+  font-family: var(--font-display);
+  font-size: 64px;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  background: linear-gradient(135deg, var(--t0), var(--t1), var(--t2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+.countdown-unit { font-size: 13px; color: var(--latte); margin-top: 4px; }
+.countdown-event { font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--sand); margin-top: 12px; }
+.countdown-sub { font-size: 12px; color: var(--brown); margin-top: 4px; }
+
+/* Insights */
+.insight-list { display: flex; flex-direction: column; gap: 10px; }
+.insight-item {
+  padding: 12px;
+  background: rgba(250,247,242,0.02);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  line-height: 1.5;
+  border-left: 3px solid var(--t1);
+  color: var(--latte);
+  font-weight: 300;
+  border-top: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.insight-item strong { color: var(--sand); font-weight: 600; }
+.insight-item.warning { border-left-color: var(--yellow); }
+.insight-item.success { border-left-color: var(--green); }
+
+/* ── CONTENT TAB ────────────────────────────── */
+.content-timeline { display: flex; flex-direction: column; gap: 8px; }
+.timeline-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: rgba(250,247,242,0.02);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  transition: opacity 0.2s;
+}
+.timeline-item.today {
+  border-color: rgba(200,113,74,0.35);
+  background: rgba(200,113,74,0.07);
+}
+.timeline-item.past { opacity: 0.35; }
+.tl-date { font-size: 12px; color: var(--latte); font-weight: 500; min-width: 48px; }
+.tl-title { flex: 1; font-size: 13px; color: var(--sand); font-weight: 500; line-height: 1.35; }
+.tl-type { font-size: 10px; padding: 2px 8px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+
+/* Post grid */
+.post-grid { display: flex; flex-direction: column; gap: 8px; }
+.post-card {
+  padding: 14px;
+  background: rgba(250,247,242,0.02);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+.post-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+.post-card-title { font-size: 13px; font-weight: 500; color: var(--sand); line-height: 1.4; flex: 1; margin-right: 10px; }
+.post-reach-val {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.post-card-stats { display: flex; gap: 14px; font-size: 12px; color: var(--brown); }
+.post-card-meta { font-size: 11px; color: var(--brown); }
+
+/* Engagement chart */
+.chart-wrap { display: flex; align-items: flex-end; gap: 5px; height: 100px; padding-top: 8px; }
+.chart-col { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; }
+.chart-bar-el { width: 100%; border-radius: 4px 4px 0 0; }
+.chart-lbl { font-size: 9px; color: var(--brown); margin-top: 5px; }
+
+/* Topic tags */
+.topic-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.topic-tag {
+  padding: 6px 14px;
+  background: rgba(250,247,242,0.02);
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  color: var(--sand);
+}
+.topic-tag.hot { border-color: var(--t1); background: rgba(200,113,74,0.08); color: var(--t0); }
+
+/* Posting times */
+.posting-time-big {
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--w0);
+  text-align: center;
+}
+.posting-time-sub { font-size: 12px; color: var(--brown); text-align: center; margin-top: 4px; }
+
+/* ── TEAM TAB ───────────────────────────────── */
+.agent-list { display: flex; flex-direction: column; gap: 8px; }
+.agent-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: rgba(250,247,242,0.02);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+.agent-avatar {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--ink);
+  flex-shrink: 0;
+}
+.agent-info { flex: 1; min-width: 0; }
+.agent-name { font-family: var(--font-display); font-weight: 600; font-size: 14px; letter-spacing: -0.01em; color: var(--w0); }
+.agent-role { font-size: 11px; color: var(--latte); font-weight: 300; margin-top: 1px; }
+.agent-right { text-align: right; flex-shrink: 0; }
+.agent-status-badge { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--sand); justify-content: flex-end; margin-bottom: 2px; }
+.agent-task { font-size: 11px; color: var(--brown); }
+
+.status-dot { width: 7px; height: 7px; border-radius: 50%; }
+.dot-green { background: var(--green); box-shadow: 0 0 5px var(--green); }
+.dot-yellow { background: var(--yellow); }
+.dot-red { background: var(--red); box-shadow: 0 0 5px var(--red); }
+
+/* Health data grid */
+.health-data-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.health-tile {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.health-tile-icon { margin-bottom: 2px; }
+.health-tile-val {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--w0);
+}
+.health-tile-label { font-size: 10px; color: var(--latte); text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* System health */
+.health-list { display: flex; flex-direction: column; gap: 10px; }
+.health-row { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--sand); }
+.health-label { flex: 1; }
+
+/* ── LIFE TAB ───────────────────────────────── */
+.placeholder-block {
+  text-align: center;
+  padding: 32px 20px;
+  color: var(--brown);
+  font-size: 13px;
+  font-weight: 300;
+}
+.placeholder-icon { font-size: 32px; margin-bottom: 10px; }
+.placeholder-title { font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--latte); margin-bottom: 6px; }
+
+.icp-list { display: flex; flex-direction: column; gap: 10px; }
+.icp-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--sand); padding: 10px 14px; background: var(--surface); border-radius: var(--radius-sm); border: 1px solid var(--border); }
+.icp-name { font-weight: 500; }
+.icp-niche { font-size: 11px; color: var(--latte); font-weight: 300; margin-top: 1px; }
+.icp-count { color: var(--green); font-family: var(--font-display); font-weight: 600; font-size: 15px; }
+
+/* ── SECTION LABEL ──────────────────────────── */
+.section-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--brown);
+  padding: 16px 0 8px;
+}
+
+/* ── COMPETITOR ─────────────────────────────── */
+.competitor-list { display: flex; flex-direction: column; gap: 8px; }
+.competitor-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+.competitor-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 14px; font-weight: 700;
+  flex-shrink: 0;
+}
+.competitor-info { flex: 1; min-width: 0; }
+.competitor-name { font-size: 13px; font-weight: 600; color: var(--w0); }
+.competitor-handle { font-size: 11px; color: var(--brown); font-weight: 300; }
+.competitor-meta { text-align: right; flex-shrink: 0; }
+.competitor-followers { font-size: 12px; color: var(--latte); }
+.competitor-format { font-size: 11px; color: var(--sand); margin-top: 2px; }
+
+/* ── PULL-DOWN ANIMATION ────────────────────── */
+@keyframes pullDown {
+  0% { transform: translateY(-8px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+.morning-header { animation: pullDown 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+/* ── RESPONSIVE DESKTOP ─────────────────────── */
+@media (min-width: 520px) {
+  .tab-label { font-size: 11px; }
+  .ig-stats-grid { grid-template-columns: repeat(3, 1fr); }
+  .days-row { gap: 10px; }
+}
+
+@media (min-width: 768px) {
+  .tab-panel { max-width: 600px; margin: 0 auto; }
+  #tab-bar { max-width: 600px; left: 50%; transform: translateX(-50%); border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+  #app { max-width: 600px; margin: 0 auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- Ambient orbs -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- IG DATA -->
+<script type="application/json" id="ig-data">
+{
+  "snapshot_date": "2026-05-07T14:30:00",
+  "follower": 2270,
+  "follower_delta": "+357",
+  "follower_delta_label": "in 9 Tagen",
+  "best_reel_views": 45948,
+  "best_reel_note": "98,2% Nicht-Follower",
+  "saves_total": 678,
+  "saves_note": "114 Top-Post",
+  "shares_total": 0,
+  "shares_note": "Strukturell-Problem",
+  "reach_total": "~49K",
+  "reach_note": "davon 1 Outlier",
+  "posts": [
+    {"date":"25.04","title":"Hör auf Claude zu sagen: Schreib mir eine gute Hook","reach":4714,"saves":108,"comments":47,"type":"reel","format":"Reel"},
+    {"date":"26.04","title":"Ich kann das NOCH nicht","reach":465,"saves":10,"comments":24,"type":"flop","format":"Carousel"},
+    {"date":"27.04","title":"Du nutzt Claude noch ohne Skills?","reach":1923,"saves":33,"comments":26,"type":"carousel","format":"Carousel"},
+    {"date":"29.04","title":"2 Einstellungen Datenschutz","reach":1324,"saves":31,"comments":0,"type":"reel","format":"Reel"},
+    {"date":"01.05","title":"41 Mitarbeiter (Tag der Arbeit)","reach":34230,"saves":318,"comments":364,"type":"hit","format":"Reel"},
+    {"date":"04.05","title":"Wie ich mit Claude Carousel-Posts baue","reach":3504,"saves":64,"comments":63,"type":"carousel","format":"Carousel"},
+    {"date":"04.05","title":"Welche KI-Tools 2026","reach":3477,"saves":114,"comments":39,"type":"reel","format":"Reel"}
+  ],
+  "insights": [
+    {"type":"success","title":"45K-Reel ist Massendurchbruch","text":"34.230 Reach, 98,2% Nicht-Follower, 318 Saves, ~73 neue Follower. Format SOFORT replizieren."},
+    {"type":"warning","title":"Shares = 0 über alle 7 Posts","text":"Strukturelles Problem. Algo belohnt Shares am stärksten. Jeder Post braucht Share-Trigger."},
+    {"type":"success","title":"+357 Follower in 9 Tagen","text":"Wachstum 3x über April-Schnitt. Getrieben durch 1 viralen Reel."},
+    {"type":"neutral","title":"Reels schlagen Carousels bei Reach","text":"Top 3 alle Reels (34K, 4.7K, 3.5K). Im Sprint Reels priorisieren."},
+    {"type":"warning","title":"Datenschutz-Reel verpufft","text":"2.098 Aufrufe, 0 Comments. Thema springt nicht."},
+    {"type":"neutral","title":"Hook-Prompt-Format funktioniert","text":"4.714 Reach, 108 Saves. Format replizierbar."}
+  ],
+  "competitors": [
+    {"name":"Julia Trost","handle":"@juliatrost.official","followers":"~16K","niche":"KI Mini-Kurse","color":"#8B5CF6","top_format":"Reels + Meta Ads"},
+    {"name":"Olivia Grimaud","handle":"@oliviagrimaud","followers":"~36K","niche":"KI Female Business","color":"#EC4899","top_format":"Carousels + TED"},
+    {"name":"Emily Higgins","handle":"@itsemilyhiggins","followers":"~25K","niche":"Creating With AI","color":"#06B6D4","top_format":"Reels + Course"},
+    {"name":"Hannah GPT","handle":"@hannah.gpt","followers":"~12K","niche":"KI-Content DACH","color":"#F59E0B","top_format":"Carousels"},
+    {"name":"Roman Knox","handle":"@roman.knox","followers":"~45K","niche":"Dark Premium Design","color":"#EF4444","top_format":"Reels + 3D Design"}
+  ]
+}
+</script>
+
+<div id="app">
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TAB 1: MORGEN                          -->
+  <!-- ═══════════════════════════════════════ -->
+  <div id="tab-morgen" class="tab-panel active">
+
+    <div class="morning-header">
+      <div class="morning-greeting" id="greeting">Guten Morgen, <span>Maike</span></div>
+      <div class="morning-date" id="morning-date"></div>
+    </div>
+
+    <!-- Wetter -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title" id="weather-location">Wetter</span>
+        <span class="badge badge-terra" id="weather-badge">laden…</span>
+      </div>
+      <div class="weather-row">
+        <div class="weather-emoji" id="weather-icon">⏳</div>
+        <div class="weather-temp-val" id="weather-temp">--°</div>
+        <div class="weather-meta">
+          <div class="weather-desc-text" id="weather-desc">Wetterdaten laden…</div>
+          <div class="weather-pills">
+            <span class="weather-pill">Gefühlt: <span id="weather-feel">--</span>°</span>
+            <span class="weather-pill">Wind: <span id="weather-wind">--</span> km/h</span>
+            <span class="weather-pill">UV: <span id="weather-uv">--</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Heute anstehend -->
+    <div class="card">
+      <div class="card-title">Heute anstehend</div>
+      <div id="today-content"><!-- JS rendered --></div>
+    </div>
+
+    <!-- Nächste 3 Tage -->
+    <div class="card">
+      <div class="card-title">Nächste 3 Tage</div>
+      <div class="days-row" id="next-days"><!-- JS rendered --></div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Quick Stats</span>
+        <span class="badge badge-terra" id="stats-badge-morning">07.05</span>
+      </div>
+      <div class="stats-strip" id="stats-strip"><!-- JS rendered --></div>
+    </div>
+
+    <!-- Vision -->
+    <div class="card">
+      <div class="card-title">Nordstern</div>
+      <div class="vision-strip">
+        Von der Unsichtbarkeit in die Sichtbarkeit, powered by Claude. Ich war vorne dabei, als KI die Welt verändert hat, habe mich gezeigt, nie aufgegeben, Menschen Mut gemacht und Freiheit für meine Familie gebaut.
+      </div>
+    </div>
+
+  </div><!-- /tab-morgen -->
+
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TAB 2: BUSINESS                        -->
+  <!-- ═══════════════════════════════════════ -->
+  <div id="tab-business" class="tab-panel">
+
+    <!-- IG Quick Numbers -->
+    <div class="section-label">Instagram Quick Numbers</div>
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Snapshot</span>
+        <span class="badge badge-terra" id="stats-badge-biz">07.05 · 14:30</span>
+      </div>
+      <div class="ig-stats-grid" id="ig-stats-grid"><!-- JS rendered --></div>
+    </div>
+
+    <!-- Countdown -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Countdown</span>
+        <span class="badge badge-terra">Live-Event</span>
+      </div>
+      <div class="countdown-block">
+        <div class="countdown-val" id="countdown-val">—</div>
+        <div class="countdown-unit">Tage bis zum Webinar</div>
+        <div class="countdown-event">Einstieg in Claude</div>
+        <div class="countdown-sub">15.05.2026 · 20:00 Uhr</div>
+      </div>
+    </div>
+
+    <!-- Webinar Funnel -->
+    <div class="section-label">Webinar-Funnel</div>
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">LEICHT-Funnel</span>
+        <span class="badge badge-yellow">Ziel: 100–140</span>
+      </div>
+      <div class="funnel-stages">
+        <div class="funnel-stage">
+          <div class="funnel-bar" style="width:100%;background:var(--t0);"></div>
+          <div class="funnel-inner"><span class="funnel-label">Reichweite (Feed)</span><span class="funnel-value" style="color:var(--t0)">~12K</span></div>
+        </div>
+        <div class="funnel-stage">
+          <div class="funnel-bar" style="width:60%;background:var(--t1);"></div>
+          <div class="funnel-inner"><span class="funnel-label">DM "LEICHT"</span><span class="funnel-value" style="color:var(--t1)">~35</span></div>
+        </div>
+        <div class="funnel-stage">
+          <div class="funnel-bar" style="width:35%;background:var(--t2);"></div>
+          <div class="funnel-inner"><span class="funnel-label">Anmeldungen</span><span class="funnel-value" style="color:var(--beige)">?</span></div>
+        </div>
+        <div class="funnel-stage">
+          <div class="funnel-bar" style="width:15%;background:var(--green);"></div>
+          <div class="funnel-inner"><span class="funnel-label">Show-up (Ziel 35%)</span><span class="funnel-value" style="color:var(--green)">—</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sprint-Ziele -->
+    <div class="section-label">Sprint-Ziele</div>
+    <div class="card">
+      <div class="progress-list">
+        <div>
+          <div class="progress-item-row"><span>LEICHT-DMs / Woche</span><span class="progress-item-val">30–50</span></div>
+          <div class="progress-track"><div class="progress-fill" style="width:70%;background:var(--t1);"></div></div>
+        </div>
+        <div>
+          <div class="progress-item-row"><span>Webinar-Anmeldungen</span><span class="progress-item-val">100–140</span></div>
+          <div class="progress-track"><div class="progress-fill" style="width:25%;background:var(--t2);"></div></div>
+        </div>
+        <div>
+          <div class="progress-item-row"><span>Save-Rate Carousels</span><span class="progress-item-val">&gt;4%</span></div>
+          <div class="progress-track"><div class="progress-fill" style="width:60%;background:var(--green);"></div></div>
+        </div>
+        <div>
+          <div class="progress-item-row"><span>Show-up-Rate</span><span class="progress-item-val">30–40%</span></div>
+          <div class="progress-track"><div class="progress-fill" style="width:0%;background:var(--green);"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Insights -->
+    <div class="section-label">Insights & Handlungsbedarf</div>
+    <div class="card">
+      <div class="insight-list" id="insight-list"><!-- JS rendered --></div>
+    </div>
+
+    <!-- Konkurrenz -->
+    <div class="section-label">Konkurrenz-Radar</div>
+    <div class="card">
+      <div class="competitor-list" id="competitor-list"><!-- JS rendered --></div>
+    </div>
+
+  </div><!-- /tab-business -->
+
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TAB 3: CONTENT                         -->
+  <!-- ═══════════════════════════════════════ -->
+  <div id="tab-content" class="tab-panel">
+
+    <!-- Content Plan -->
+    <div class="section-label">Content-Plan · Sprint bis 15.05</div>
+    <div class="card">
+      <div class="content-timeline" id="content-timeline"><!-- JS rendered --></div>
+    </div>
+
+    <!-- Post Performance -->
+    <div class="section-label">Letzte 7 Posts</div>
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Performance</span>
+        <span class="badge badge-green">Saves &gt; Likes</span>
+      </div>
+      <div class="chart-wrap" id="chart-wrap"><!-- JS rendered --></div>
+      <div style="margin-top:12px;font-size:11px;color:var(--brown);" id="chart-legend"></div>
+    </div>
+
+    <div class="card">
+      <div class="post-grid" id="post-grid"><!-- JS rendered --></div>
+    </div>
+
+    <!-- Posting Times -->
+    <div class="section-label">Optimale Zeiten</div>
+    <div class="card">
+      <div class="posting-time-big">07:30</div>
+      <div class="posting-time-sub">oder 18:30–19:30 Uhr</div>
+      <div style="margin-top:14px;font-size:13px;color:var(--latte);font-weight:300;text-align:center;">Werktag-Default · Abend-Slot für Reels stärker</div>
+    </div>
+
+    <!-- Topic Tags -->
+    <div class="section-label">Aktuelle Themen</div>
+    <div class="card">
+      <div class="topic-tags">
+        <span class="topic-tag hot">Webinar 15.05</span>
+        <span class="topic-tag hot">Challenge 47€</span>
+        <span class="topic-tag">KI-Mitarbeiter</span>
+        <span class="topic-tag">Claude Code</span>
+        <span class="topic-tag">ManyChat Flow</span>
+        <span class="topic-tag">Beta-Cohort</span>
+        <span class="topic-tag">Funnel LEICHT</span>
+        <span class="topic-tag">Daily Podcast</span>
+      </div>
+    </div>
+
+  </div><!-- /tab-content -->
+
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TAB 4: TEAM                            -->
+  <!-- ═══════════════════════════════════════ -->
+  <div id="tab-team" class="tab-panel">
+
+    <div class="section-label">KI-Team Status</div>
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">9 Mitarbeiter</span>
+        <span class="badge badge-green">Autonom: AN</span>
+      </div>
+      <div class="agent-list" id="agent-list"><!-- JS rendered --></div>
+    </div>
+
+    <!-- System Health -->
+    <div class="section-label">System-Health</div>
+    <div class="card">
+      <div class="health-list">
+        <div class="health-row"><div class="status-dot dot-green"></div><span class="health-label">Agents (launchd)</span></div>
+        <div class="health-row"><div class="status-dot dot-green"></div><span class="health-label">Kill-Switch: ON</span></div>
+        <div class="health-row"><div class="status-dot dot-green"></div><span class="health-label">Iris Supervisor</span></div>
+        <div class="health-row"><div class="status-dot dot-yellow"></div><span class="health-label">IG Snapshot (manual)</span></div>
+        <div class="health-row"><div class="status-dot dot-red"></div><span class="health-label">Brave Search API</span></div>
+        <div class="health-row"><div class="status-dot dot-green"></div><span class="health-label">Chrome MCP</span></div>
+        <div class="health-row"><div class="status-dot dot-green"></div><span class="health-label">ManyChat LEICHT</span></div>
+        <div class="health-row"><div class="status-dot dot-green"></div><span class="health-label">Telegram Briefing</span></div>
+      </div>
+    </div>
+
+    <!-- Agent Communication Placeholder -->
+    <div class="section-label">Agent-Kommunikation</div>
+    <div class="card">
+      <div class="placeholder-block">
+        <div class="placeholder-icon">💬</div>
+        <div class="placeholder-title">Live-Log kommt bald</div>
+        <div>Hier erscheinen Agent-Nachrichten und Statusupdates in Echtzeit.</div>
+      </div>
+    </div>
+
+  </div><!-- /tab-team -->
+
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TAB 5: LIFE                            -->
+  <!-- ═══════════════════════════════════════ -->
+  <div id="tab-life" class="tab-panel">
+
+    <!-- Health Data -->
+    <div class="section-label">Gesundheit</div>
+    <div class="card" id="health-card">
+      <div class="card-header">
+        <span class="card-title">Apple Health</span>
+        <span class="badge badge-terra" id="health-badge">laden…</span>
+      </div>
+      <div id="health-grid" class="health-data-grid">
+        <div class="health-tile">
+          <div class="health-tile-icon"><svg viewBox="0 0 24 24" width="20" height="20" stroke="var(--t0)" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+          <div class="health-tile-val" id="h-steps">--</div>
+          <div class="health-tile-label">Schritte</div>
+        </div>
+        <div class="health-tile">
+          <div class="health-tile-icon"><svg viewBox="0 0 24 24" width="20" height="20" stroke="var(--t0)" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+          <div class="health-tile-val" id="h-hr">--</div>
+          <div class="health-tile-label">Ruhepuls</div>
+        </div>
+        <div class="health-tile">
+          <div class="health-tile-icon"><svg viewBox="0 0 24 24" width="20" height="20" stroke="var(--t0)" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 18a5 5 0 00-10 0"/><line x1="12" y1="9" x2="12" y2="2"/><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"/><line x1="1" y1="18" x2="3" y2="18"/><line x1="21" y1="18" x2="23" y2="18"/><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"/></svg></div>
+          <div class="health-tile-val" id="h-sleep">--</div>
+          <div class="health-tile-label">Schlaf</div>
+        </div>
+        <div class="health-tile">
+          <div class="health-tile-icon"><svg viewBox="0 0 24 24" width="20" height="20" stroke="var(--t0)" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <div class="health-tile-val" id="h-hrv">--</div>
+          <div class="health-tile-label">HRV</div>
+        </div>
+        <div class="health-tile">
+          <div class="health-tile-icon"><svg viewBox="0 0 24 24" width="20" height="20" stroke="var(--t0)" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="health-tile-val" id="h-active">--</div>
+          <div class="health-tile-label">Aktivmin.</div>
+        </div>
+        <div class="health-tile">
+          <div class="health-tile-icon"><svg viewBox="0 0 24 24" width="20" height="20" stroke="var(--t0)" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div class="health-tile-val" id="h-cal">--</div>
+          <div class="health-tile-label">kcal</div>
+        </div>
+      </div>
+      <button id="health-import-btn" onclick="importFromClipboard()" style="
+        margin-top:12px;width:100%;padding:12px;border:1px dashed var(--border-hover);
+        border-radius:var(--radius-sm);background:rgba(200,113,74,0.06);color:var(--t0);
+        font-family:var(--font-body);font-size:13px;font-weight:500;cursor:pointer;
+        display:flex;align-items:center;justify-content:center;gap:8px;">
+        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
+        Health-Daten einfügen
+      </button>
+      <div id="health-hint" style="font-size:11px;color:var(--brown);margin-top:8px;text-align:center;display:none;">
+        Starte den Shortcut "Health Export", dann tippe hier auf Einfügen
+      </div>
+    </div>
+
+    <!-- Tracker -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Tracker</span>
+        <span class="badge badge-terra" id="tracker-badge">--</span>
+      </div>
+      <div id="tracker-grid" class="health-data-grid">
+        <div class="health-tile">
+          <div class="health-tile-icon"><svg viewBox="0 0 24 24" width="20" height="20" stroke="var(--t0)" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg></div>
+          <div class="health-tile-val" id="t-water">--</div>
+          <div class="health-tile-label">Wasser (L)</div>
+        </div>
+        <div class="health-tile">
+          <div class="health-tile-icon"><svg viewBox="0 0 24 24" width="20" height="20" stroke="var(--t0)" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.27 21.7s9.87-3.5 12.73-6.36a4.5 4.5 0 00-6.36-6.37C5.77 11.84 2.27 21.7 2.27 21.7zM15.9 7l3-4.5 3 4.5-3 4.5z"/></svg></div>
+          <div class="health-tile-val" id="t-kcal-in">--</div>
+          <div class="health-tile-label">kcal gegessen</div>
+        </div>
+        <div class="health-tile">
+          <div class="health-tile-icon"><svg viewBox="0 0 24 24" width="20" height="20" stroke="var(--t0)" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"/></svg></div>
+          <div class="health-tile-val" id="t-protein">--</div>
+          <div class="health-tile-label">Protein (g)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Personal Goals -->
+    <div class="section-label">Persönliche Ziele</div>
+    <div class="card">
+      <div class="vision-strip">
+        Von der Unsichtbarkeit in die Sichtbarkeit, powered by Claude. Freiheit für meine Familie bauen. Vorne dabei sein, wenn KI die Welt verändert.
+      </div>
+      <div style="margin-top:14px;display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--sand);">
+          <span style="font-size:18px;">⚡</span><span>Early Adopter — KI-System aufbauen</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--sand);">
+          <span style="font-size:18px;">🎓</span><span>Lehrer-Generation inspirieren</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--sand);">
+          <span style="font-size:18px;">🏅</span><span>Sportler-Disziplin täglich leben</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ICP Coverage -->
+    <div class="section-label">ICP-Abdeckung (letzter Sprint)</div>
+    <div class="card">
+      <div class="icp-list">
+        <div class="icp-row">
+          <div><div class="icp-name">Sandra</div><div class="icp-niche">Notfallsanitäterin · Diabetes-Content</div></div>
+          <div class="icp-count">5</div>
+        </div>
+        <div class="icp-row">
+          <div><div class="icp-name">Marco</div><div class="icp-niche">50, Erfahrung, kein System</div></div>
+          <div class="icp-count">4</div>
+        </div>
+        <div class="icp-row">
+          <div><div class="icp-name">Lisa</div><div class="icp-niche">Neustart, Angst KI macht sie unecht</div></div>
+          <div class="icp-count">4</div>
+        </div>
+        <div class="icp-row">
+          <div><div class="icp-name">Heiko</div><div class="icp-niche">Praxis-Inhaber, zeitknapp</div></div>
+          <div class="icp-count">5</div>
+        </div>
+        <div class="icp-row">
+          <div><div class="icp-name">Jana</div><div class="icp-niche">HP / Selbstständig</div></div>
+          <div class="icp-count">4</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /tab-life -->
+
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- BOTTOM TAB BAR                         -->
+  <!-- ═══════════════════════════════════════ -->
+  <nav id="tab-bar" role="tablist" aria-label="Hauptnavigation">
+    <div class="tab-list">
+      <button class="tab-btn active" data-tab="morgen" role="tab" aria-selected="true">
+        <span class="tab-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></span>
+        <span class="tab-label">Morgen</span>
+      </button>
+      <button class="tab-btn" data-tab="business" role="tab" aria-selected="false">
+        <span class="tab-icon"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></span>
+        <span class="tab-label">Business</span>
+      </button>
+      <button class="tab-btn" data-tab="content" role="tab" aria-selected="false">
+        <span class="tab-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
+        <span class="tab-label">Content</span>
+      </button>
+      <button class="tab-btn" data-tab="team" role="tab" aria-selected="false">
+        <span class="tab-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></span>
+        <span class="tab-label">Team</span>
+      </button>
+      <button class="tab-btn" data-tab="life" role="tab" aria-selected="false">
+        <span class="tab-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></span>
+        <span class="tab-label">Life</span>
+      </button>
+    </div>
+  </nav>
+
+</div><!-- /app -->
+
+<script>
+/* ── DATA ────────────────────────────────────── */
+const D = JSON.parse(document.getElementById('ig-data').textContent);
+
+const CONTENT_PLAN = [
+  {"date":"2026-05-05","title":"3-Sätze-Briefing an Claude","type":"Reel"},
+  {"date":"2026-05-06","title":"Carousel in 3 Schritten (v2)","type":"Carousel"},
+  {"date":"2026-05-07","title":"Setup-Fehler Nr. 1","type":"Reel"},
+  {"date":"2026-05-08","title":"5 Prompts die dein Business verändern","type":"Carousel"},
+  {"date":"2026-05-09","title":"Vorher/Nachher Content-Workflow","type":"Carousel"},
+  {"date":"2026-05-10","title":"Was wenn KI deine Stimme klaut?","type":"Reel"},
+  {"date":"2026-05-11","title":"Claude vs ChatGPT ehrlich","type":"Carousel"},
+  {"date":"2026-05-12","title":"3 Abkürzungen die niemand zeigt","type":"Reel"},
+  {"date":"2026-05-13","title":"Mein System in 60 Sekunden","type":"Reel"},
+  {"date":"2026-05-14","title":"5-Minuten-Setup Webinar-Ready","type":"Carousel"}
+];
+
+const AGENTS = [
+  {"name":"Mara","role":"Content-Copywriterin","status":"active","task":"Inbox-Watch","color":"#C8714A"},
+  {"name":"Sara","role":"Grafik-Designerin","status":"active","task":"Story-Watch","color":"#F0B898"},
+  {"name":"Katarina","role":"Social Media Lead","status":"ready","task":"Orchestriert","color":"#A05030"},
+  {"name":"Max","role":"Community Manager","status":"active","task":"DM-Check 30m","color":"#A07850"},
+  {"name":"Pascal","role":"Leads-Lead / Funnel","status":"waiting","task":"Pre-Webinar","color":"#D4BFA0"},
+  {"name":"Mark","role":"Webinare-Lead","status":"active","task":"Skript 15.05","color":"#7A3A1E"},
+  {"name":"Linn","role":"Editorial-Strategin","status":"active","task":"Daily 07:00","color":"#C4A882"},
+  {"name":"Iris","role":"Supervisor / QA","status":"active","task":"Stündlich","color":"#7A5C3A"},
+  {"name":"Roman","role":"COO / Koordination","status":"ready","task":"So 17:00","color":"#4A3220"}
+];
+
+/* ── HELPERS ─────────────────────────────────── */
+const WOCHENTAGE = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+const MONATE = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+const WD_SHORT = ['So','Mo','Di','Mi','Do','Fr','Sa'];
+const pad = n => String(n).padStart(2,'0');
+function fmt(n) { return typeof n === 'string' ? n : n.toLocaleString('de-DE'); }
+
+function todayISO() {
+  const n = new Date();
+  return n.getFullYear() + '-' + pad(n.getMonth()+1) + '-' + pad(n.getDate());
+}
+
+function dateLabel(isoDate) {
+  const [y,m,d] = isoDate.split('-').map(Number);
+  const dow = new Date(y,m-1,d).getDay();
+  return WD_SHORT[dow] + ' ' + pad(d) + '.' + pad(m);
+}
+
+/* ── TAB SWITCHING ───────────────────────────── */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tab = btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.tab === tab);
+      b.setAttribute('aria-selected', b.dataset.tab === tab);
+    });
+    document.querySelectorAll('.tab-panel').forEach(p => {
+      p.classList.toggle('active', p.id === 'tab-' + tab);
+    });
+    // scroll active panel to top
+    const activePanel = document.getElementById('tab-' + tab);
+    if (activePanel) activePanel.scrollTop = 0;
+  });
+});
+
+/* ── GREETING ────────────────────────────────── */
+function renderGreeting() {
+  const h = new Date().getHours();
+  let g = h < 12 ? 'Guten Morgen,' : h < 17 ? 'Hey,' : 'Guten Abend,';
+  document.getElementById('greeting').innerHTML = g + ' <span>Maike</span>';
+  const now = new Date();
+  document.getElementById('morning-date').textContent =
+    WOCHENTAGE[now.getDay()] + ', ' + now.getDate() + '. ' + MONATE[now.getMonth()] + ' ' + now.getFullYear();
+}
+
+/* ── COUNTDOWN ───────────────────────────────── */
+function renderCountdown() {
+  const webinar = new Date('2026-05-15T20:00:00');
+  const days = Math.max(0, Math.ceil((webinar - new Date()) / 86400000));
+  const el = document.getElementById('countdown-val');
+  if (el) el.textContent = days;
+}
+
+/* ── WEATHER ─────────────────────────────────── */
+const WMO_ICONS = {0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌧️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'🌨️',73:'🌨️',75:'🌨️',80:'🌦️',81:'🌧️',82:'🌧️',95:'⛈️',96:'⛈️',99:'⛈️'};
+const WMO_TEXT = {0:'Klar',1:'Überwiegend klar',2:'Teilweise bewölkt',3:'Bewölkt',45:'Nebel',48:'Reifnebel',51:'Leichter Niesel',53:'Nieselregen',55:'Starker Niesel',61:'Leichter Regen',63:'Regen',65:'Starkregen',71:'Leichter Schnee',73:'Schnee',75:'Starker Schnee',80:'Leichte Schauer',81:'Schauer',82:'Starke Schauer',95:'Gewitter',96:'Gewitter mit Hagel',99:'Starkes Gewitter'};
+
+async function fetchWeatherAt(lat, lon, cityName) {
+  try {
+    document.getElementById('weather-location').textContent = 'Wetter ' + cityName;
+    const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&daily=uv_index_max&timezone=Europe/Berlin&forecast_days=1`);
+    const data = await res.json();
+    const c = data.current;
+    document.getElementById('weather-icon').textContent = WMO_ICONS[c.weather_code] || '🌡️';
+    document.getElementById('weather-temp').textContent = Math.round(c.temperature_2m) + '°';
+    document.getElementById('weather-desc').textContent = WMO_TEXT[c.weather_code] || '';
+    document.getElementById('weather-feel').textContent = Math.round(c.apparent_temperature);
+    document.getElementById('weather-wind').textContent = Math.round(c.wind_speed_10m);
+    document.getElementById('weather-uv').textContent = data.daily.uv_index_max[0];
+    const t = new Date(c.time);
+    document.getElementById('weather-badge').textContent = pad(t.getHours()) + ':' + pad(t.getMinutes()) + ' live';
+  } catch(e) {
+    document.getElementById('weather-badge').textContent = 'offline';
+    document.getElementById('weather-desc').textContent = 'Keine Verbindung';
+  }
+}
+
+async function reverseGeocode(lat, lon) {
+  try {
+    const res = await fetch(`https://geocoding-api.open-meteo.com/v1/reverse?latitude=${lat}&longitude=${lon}&count=1&language=de`);
+    const data = await res.json();
+    if (data.results && data.results.length) return data.results[0].name;
+  } catch(e) {}
+  return null;
+}
+
+async function fetchWeather() {
+  if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const lat = pos.coords.latitude.toFixed(4);
+        const lon = pos.coords.longitude.toFixed(4);
+        const city = await reverseGeocode(lat, lon) || 'Dein Standort';
+        fetchWeatherAt(lat, lon, city);
+      },
+      () => fetchWeatherAt(49.0069, 8.4037, 'Karlsruhe'),
+      { timeout: 5000, maximumAge: 300000 }
+    );
+  } else {
+    fetchWeatherAt(49.0069, 8.4037, 'Karlsruhe');
+  }
+}
+
+/* ── CONTENT PLAN HELPERS ────────────────────── */
+function classifyDate(isoDate) {
+  const today = todayISO();
+  if (isoDate < today) return 'past';
+  if (isoDate === today) return 'today';
+  return 'future';
+}
+
+/* ── MORNING: TODAY CONTENT ──────────────────── */
+function renderTodayContent() {
+  const today = todayISO();
+  const todayItems = CONTENT_PLAN.filter(i => i.date === today);
+  const el = document.getElementById('today-content');
+  if (!todayItems.length) {
+    el.innerHTML = '<div style="font-size:13px;color:var(--latte);font-weight:300;">Kein Content heute geplant. Freier Tag!</div>';
+    return;
+  }
+  el.innerHTML = todayItems.map(item => `
+    <div class="today-post">
+      <div class="today-label">Heute posten</div>
+      <div class="today-post-title">${item.title}</div>
+      <span class="today-post-type ${item.type.toLowerCase()==='reel'?'type-reel':'type-carousel'}">${item.type}</span>
+    </div>
+  `).join('');
+}
+
+/* ── MORNING: NEXT 3 DAYS ────────────────────── */
+function renderNextDays() {
+  const today = todayISO();
+  const upcoming = CONTENT_PLAN.filter(i => i.date >= today).slice(0, 3);
+  const el = document.getElementById('next-days');
+  el.innerHTML = upcoming.map((item, idx) => {
+    const isToday = item.date === today;
+    return `
+    <div class="day-chip ${isToday ? 'today-chip' : ''}">
+      <div class="day-chip-date">${isToday ? 'Heute' : dateLabel(item.date)}</div>
+      <div class="day-chip-title">${item.title}</div>
+      <div class="day-chip-badge">
+        <span class="${item.type.toLowerCase()==='reel'?'type-reel':'type-carousel'}" style="font-size:10px;padding:2px 7px;border-radius:20px;font-weight:500;">${item.type}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ── MORNING: STATS STRIP ────────────────────── */
+function renderStatsStrip() {
+  const items = [
+    {v: fmt(D.follower), l: 'Follower', d: D.follower_delta, dir: 'up'},
+    {v: fmt(D.best_reel_views), l: 'Best Views', d: D.best_reel_note, dir: 'up'},
+    {v: fmt(D.saves_total), l: 'Saves', d: D.saves_note, dir: 'up'},
+    {v: D.reach_total, l: 'Reach', d: D.reach_note, dir: 'up'},
+    {v: fmt(D.shares_total), l: 'Shares', d: D.shares_note, dir: 'down'}
+  ];
+  const sd = new Date(D.snapshot_date);
+  document.getElementById('stats-badge-morning').textContent = pad(sd.getDate()) + '.' + pad(sd.getMonth()+1);
+  document.getElementById('stats-strip').innerHTML = items.map(i => `
+    <div class="stat-chip">
+      <div class="stat-chip-val">${i.v}</div>
+      <div class="stat-chip-label">${i.l}</div>
+      <div class="stat-chip-delta ${i.dir==='up'?'delta-up':'delta-down'}">${i.d}</div>
+    </div>`).join('');
+}
+
+/* ── BUSINESS: IG STATS GRID ─────────────────── */
+function renderIGStatsGrid() {
+  const sd = new Date(D.snapshot_date);
+  document.getElementById('stats-badge-biz').textContent = pad(sd.getDate()) + '.' + pad(sd.getMonth()+1) + ' · ' + pad(sd.getHours()) + ':' + pad(sd.getMinutes());
+  const cells = [
+    {v: fmt(D.follower), l: 'Follower', note: D.follower_delta + ' ' + D.follower_delta_label},
+    {v: fmt(D.best_reel_views), l: 'Best Reel Views', note: D.best_reel_note},
+    {v: fmt(D.saves_total), l: 'Saves (7 Posts)', note: D.saves_note},
+    {v: fmt(D.shares_total), l: 'Shares (7 Posts)', note: D.shares_note},
+    {v: D.reach_total, l: 'Reach (7 Posts)', note: D.reach_note},
+    {v: D.posts.length + '', l: 'Posts analysiert', note: 'Snapshot-Zeitraum'}
+  ];
+  document.getElementById('ig-stats-grid').innerHTML = cells.map(c => `
+    <div class="ig-stat-cell">
+      <div class="ig-stat-val">${c.v}</div>
+      <div class="ig-stat-label">${c.l}</div>
+      <div class="ig-stat-note">${c.note}</div>
+    </div>`).join('');
+}
+
+/* ── BUSINESS: INSIGHTS ──────────────────────── */
+function renderInsights() {
+  const cls = {success:'success', warning:'warning', neutral:''};
+  document.getElementById('insight-list').innerHTML = D.insights.map(i =>
+    `<div class="insight-item ${cls[i.type]||''}"><strong>${i.title}</strong> — ${i.text}</div>`
+  ).join('');
+}
+
+/* ── BUSINESS: COMPETITORS ───────────────────── */
+function renderCompetitors() {
+  document.getElementById('competitor-list').innerHTML = D.competitors.map(c => `
+    <div class="competitor-row">
+      <div class="competitor-avatar" style="background:${c.color}20;color:${c.color};">${c.name[0]}</div>
+      <div class="competitor-info">
+        <div class="competitor-name">${c.name}</div>
+        <div class="competitor-handle">${c.handle}</div>
+      </div>
+      <div class="competitor-meta">
+        <div class="competitor-followers">${c.followers}</div>
+        <div class="competitor-format">${c.top_format}</div>
+      </div>
+    </div>`).join('');
+}
+
+/* ── CONTENT: TIMELINE ───────────────────────── */
+function renderContentTimeline() {
+  document.getElementById('content-timeline').innerHTML = CONTENT_PLAN.map(item => {
+    const cls = classifyDate(item.date);
+    const typeClass = item.type.toLowerCase()==='reel' ? 'type-reel' : 'type-carousel';
+    return `<div class="timeline-item ${cls}">
+      <span class="tl-date">${dateLabel(item.date)}</span>
+      <span class="tl-title">${item.title}</span>
+      <span class="tl-type ${typeClass}">${item.type}</span>
+    </div>`;
+  }).join('');
+}
+
+/* ── CONTENT: CHART ──────────────────────────── */
+function renderChart() {
+  const maxR = Math.max(...D.posts.map(p => p.reach));
+  const colors = {hit:'var(--green)', flop:'var(--red)', reel:'var(--t1)', carousel:'var(--t1)'};
+  document.getElementById('chart-wrap').innerHTML = D.posts.map(p => {
+    const h = Math.max(4, (p.reach/maxR)*100);
+    return `<div class="chart-col">
+      <div class="chart-bar-el" style="height:${h}%;background:${colors[p.type]||'var(--t1)'};border-radius:4px 4px 0 0;" title="${p.title}: ${fmt(p.reach)}"></div>
+      <div class="chart-lbl">${p.date}</div>
+    </div>`;
+  }).join('');
+  const hit = D.posts.find(p=>p.type==='hit');
+  const legend = hit ? `Grün = ${fmt(hit.reach)} Outlier "${hit.title.substring(0,20)}…"` : 'Y-Achse: Reichweite';
+  document.getElementById('chart-legend').textContent = legend;
+}
+
+/* ── CONTENT: POST GRID ──────────────────────── */
+function renderPostGrid() {
+  document.getElementById('post-grid').innerHTML = D.posts.map(p => {
+    const reachColor = p.type==='hit'?'var(--green)':p.type==='flop'?'var(--red)':'var(--t1)';
+    const typeClass = p.format==='Reel' ? 'type-reel' : 'type-carousel';
+    return `<div class="post-card">
+      <div class="post-card-top">
+        <div class="post-card-title">${p.title}</div>
+        <div class="post-reach-val" style="color:${reachColor}">${fmt(p.reach)}</div>
+      </div>
+      <div class="post-card-stats">
+        <span>🔖 ${fmt(p.saves)}</span>
+        <span>💬 ${fmt(p.comments)}</span>
+        <span class="post-card-meta">${p.date}</span>
+        <span class="tl-type ${typeClass}" style="margin-left:auto;">${p.format}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ── TEAM: AGENTS ────────────────────────────── */
+function renderAgents() {
+  const statusLabel = {active:'Aktiv', ready:'Bereit', waiting:'Wartend', error:'Fehler'};
+  const dotClass = {active:'dot-green', ready:'dot-green', waiting:'dot-yellow', error:'dot-red'};
+  document.getElementById('agent-list').innerHTML = AGENTS.map(a => {
+    const initials = a.name.length > 3 ? a.name[0] : a.name.substring(0,2);
+    const avatarColor = a.color;
+    const textColor = ['#F0B898','#D4BFA0','#C4A882'].includes(a.color) ? '#150D06' : '#FAF7F2';
+    return `<div class="agent-row">
+      <div class="agent-avatar" style="background:${avatarColor};color:${textColor};">${initials}</div>
+      <div class="agent-info">
+        <div class="agent-name">${a.name}</div>
+        <div class="agent-role">${a.role}</div>
+      </div>
+      <div class="agent-right">
+        <div class="agent-status-badge"><div class="status-dot ${dotClass[a.status]}"></div>${statusLabel[a.status]}</div>
+        <div class="agent-task">${a.task}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ── HEALTH DATA ────────────────────────────── */
+const HEALTH_KEY = 'maike_health_data';
+
+function loadHealthData() {
+  const hashData = parseHealthFromHash();
+  if (hashData) {
+    localStorage.setItem(HEALTH_KEY, JSON.stringify(hashData));
+    applyHealthData(hashData);
+    history.replaceState(null, '', location.pathname);
+    return;
+  }
+  const stored = localStorage.getItem(HEALTH_KEY);
+  if (stored) {
+    try {
+      const data = JSON.parse(stored);
+      const age = daysBetween(data.date);
+      if (age <= 2) {
+        applyHealthData(data);
+        return;
+      }
+    } catch(e) {}
+  }
+  document.getElementById('health-badge').textContent = 'kein Import';
+  document.getElementById('health-hint').style.display = 'block';
+  document.getElementById('tracker-badge').textContent = '--';
+}
+
+function parseHealthFromHash() {
+  const hash = location.hash;
+  if (!hash || !hash.includes('health=')) return null;
+  try {
+    const encoded = hash.split('health=')[1];
+    const json = decodeURIComponent(atob(encoded));
+    return JSON.parse(json);
+  } catch(e) {
+    try {
+      const encoded = hash.split('health=')[1];
+      return JSON.parse(decodeURIComponent(encoded));
+    } catch(e2) { return null; }
+  }
+}
+
+function daysBetween(dateStr) {
+  if (!dateStr) return 99;
+  const parts = dateStr.match(/(\d+)/g);
+  if (!parts || parts.length < 2) return 99;
+  const now = new Date();
+  let d;
+  if (parts[0].length === 4) d = new Date(parts[0], parts[1]-1, parts[2]||1);
+  else d = new Date(now.getFullYear(), parts[1]-1, parts[0]);
+  return Math.abs(Math.floor((now - d) / 86400000));
+}
+
+function applyHealthData(data) {
+  const dateStr = data.date || 'heute';
+  document.getElementById('health-badge').textContent = dateStr;
+  document.getElementById('health-hint').style.display = 'none';
+  const map = {
+    'h-steps': v => Number(v).toLocaleString('de-DE'),
+    'h-hr': v => v + '',
+    'h-sleep': v => v + 'h',
+    'h-hrv': v => v + 'ms',
+    'h-active': v => v + '',
+    'h-cal': v => Number(v).toLocaleString('de-DE'),
+    't-water': v => v + '',
+    't-kcal-in': v => Number(v).toLocaleString('de-DE'),
+    't-protein': v => v + ''
+  };
+  const keys = {
+    'h-steps':'steps', 'h-hr':'resting_hr', 'h-sleep':'sleep_hours',
+    'h-hrv':'hrv', 'h-active':'active_minutes', 'h-cal':'active_calories',
+    't-water':'water_liters', 't-kcal-in':'calories_eaten', 't-protein':'protein_g'
+  };
+  for (const [elId, dataKey] of Object.entries(keys)) {
+    if (data[dataKey] != null) {
+      document.getElementById(elId).textContent = map[elId](data[dataKey]);
+    }
+  }
+  if (data.water_liters != null || data.calories_eaten != null) {
+    document.getElementById('tracker-badge').textContent = dateStr;
+  }
+}
+
+window.importHealth = function(jsonString) {
+  try {
+    const data = typeof jsonString === 'string' ? JSON.parse(jsonString) : jsonString;
+    localStorage.setItem(HEALTH_KEY, JSON.stringify(data));
+    applyHealthData(data);
+    const btn = document.getElementById('health-import-btn');
+    if (btn) { btn.textContent = 'Daten geladen'; btn.style.borderColor = 'var(--green)'; btn.style.color = 'var(--green)'; }
+    return 'OK';
+  } catch(e) { return 'Fehler: ' + e.message; }
+};
+
+async function importFromClipboard() {
+  const btn = document.getElementById('health-import-btn');
+  try {
+    const text = await navigator.clipboard.readText();
+    const result = importHealth(text);
+    if (result !== 'OK') throw new Error(result);
+  } catch(e) {
+    btn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> Clipboard leer oder kein JSON';
+    btn.style.color = 'var(--red)';
+    setTimeout(() => {
+      btn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> Health-Daten einfügen';
+      btn.style.color = 'var(--t0)'; btn.style.borderColor = 'var(--border-hover)';
+    }, 3000);
+  }
+}
+
+/* ── INIT ────────────────────────────────────── */
+function init() {
+  renderGreeting();
+  renderCountdown();
+  renderTodayContent();
+  renderNextDays();
+  renderStatsStrip();
+  renderIGStatsGrid();
+  renderInsights();
+  renderCompetitors();
+  renderContentTimeline();
+  renderChart();
+  renderPostGrid();
+  renderAgents();
+  fetchWeather();
+  loadHealthData();
+}
+
+init();
+setInterval(renderGreeting, 60000);
+setInterval(renderCountdown, 60000);
+setInterval(fetchWeather, 600000);
+</script>
+</body>
+</html>
