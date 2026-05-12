@@ -555,140 +555,774 @@ const PROMPTS = [
     icon: "📅",
     title: "Content Planen",
     desc: "Wenn du einen strukturierten 4-Wochen-Plan brauchst, der auf dein Angebot hinführt.",
-    prompt: `Du bist ein erfahrener Social-Media-Stratege. Erstelle einen 4-Wochen-Contentplan für meine Nische {{NISCHE}}. Meine Zielgruppe: {{ZIELGRUPPE}}. Mein Angebot: {{ANGEBOT}}. Tonalität: {{TONALITAET}}. Strukturiere den Plan nach Wochen mit je 4 Posts. Für jeden Post: Thema, Format (Carousel, Reel, Story, Single Post), Hook (erster Satz), Kernaussage, Call-to-Action. Achte darauf, dass die Posts aufeinander aufbauen und am Ende der 4 Wochen auf mein Angebot hinführen.`
+    prompt: `Du bist ein Social-Media-Stratege, der auf organisches Wachstum für Soloselbstständige spezialisiert ist. Erstelle einen 4-Wochen-Contentplan für Instagram.
+
+Mein Kontext:
+- Nische: {{NISCHE}}
+- Zielgruppe: {{ZIELGRUPPE}}
+- Mein Angebot: {{ANGEBOT}}
+- Tonalität: {{TONALITAET}}
+
+Anforderungen an den Plan:
+1. Strukturiere nach Wochen mit je 4 Posts (insgesamt 16 Posts)
+2. Jede Woche hat ein übergeordnetes Thema, das die Zielgruppe Schritt für Schritt näher an mein Angebot führt:
+   - Woche 1: Problem bewusst machen (die Zielgruppe soll sich wiedererkennen)
+   - Woche 2: Vertrauen aufbauen (zeigen dass ich den Weg kenne)
+   - Woche 3: Lösung greifbar machen (konkrete Einblicke, Mini-Erfolge ermöglichen)
+   - Woche 4: Angebot positionieren (natürlicher Übergang zum Kauf)
+3. Für jeden Post liefere:
+   - Thema + Arbeitstitel
+   - Format: Carousel (Edukation), Reel (Persönlichkeit/Reichweite), Story-Serie (Nähe), Single Post (Statement)
+   - Hook: Der erste Satz, der zum Stoppen zwingt. Maximal 10 Wörter. Kein Clickbait, sondern eine echte Aussage, die Resonanz erzeugt.
+   - Kernaussage in einem Satz
+   - Call-to-Action (variiere zwischen: Kommentar-CTA, Speichern-CTA, Teilen-CTA, DM-CTA, Link-CTA)
+   - Share-Trigger: Warum würde jemand diesen Post an eine Freundin weiterleiten?
+4. Verteile die Formate so: 6 Carousels, 5 Reels, 3 Story-Serien, 2 Single Posts
+5. Markiere 2 Posts als "Reichweiten-Posts" (hohe Share-Wahrscheinlichkeit) und 2 als "Conversion-Posts" (führen direkt zum Angebot)
+
+Formatiere das Ergebnis als übersichtliche Tabelle pro Woche.`
   },
   {
     num: "02",
     icon: "✍️",
     title: "Captions Schreiben",
     desc: "Wenn du eine starke Instagram-Caption brauchst, die Aufmerksamkeit erzeugt und konvertiert.",
-    prompt: `Du bist ein erfahrener Copywriter für Instagram. Schreibe eine Caption für einen Post über {{NISCHE}}. Zielgruppe: {{ZIELGRUPPE}}. Tonalität: {{TONALITAET}}. Mein Angebot: {{ANGEBOT}}. Die Caption beginnt mit einem Hook, der sofort Aufmerksamkeit erzeugt. Dann eine persönliche Story oder ein konkretes Beispiel. Dann der Wert, den mein Angebot liefert. Am Ende ein klarer Call-to-Action. Maximal 2200 Zeichen. Keine Emojis. Vollständige Sätze.`
+    prompt: `Du bist ein Copywriter, der auf Instagram-Captions für Soloselbstständige spezialisiert ist. Schreibe eine Caption, die nicht nach KI klingt, sondern nach einem echten Menschen, der etwas Wichtiges zu sagen hat.
+
+Mein Kontext:
+- Nische: {{NISCHE}}
+- Zielgruppe: {{ZIELGRUPPE}}
+- Mein Angebot: {{ANGEBOT}}
+- Tonalität: {{TONALITAET}}
+- Thema des Posts: [Hier dein Thema einfügen]
+
+Struktur der Caption:
+1. HOOK (erste Zeile): Ein Satz der sofort Aufmerksamkeit erzeugt. Nutze eine dieser Techniken: eine provokante Behauptung, einen Widerspruch zu dem was alle glauben, eine sehr spezifische Situation die die Zielgruppe sofort wiedererkennt, oder einen Satz der mit "Ich" beginnt und etwas Verletzliches oder Überraschendes offenbart. Kein Clickbait, keine Frage.
+2. STORY/KONTEXT (3-5 Sätze): Eine persönliche Beobachtung, ein konkretes Beispiel oder eine Mini-Story. Nutze spezifische Details (Zahlen, Situationen, Orte, Gefühle), keine abstrakten Aussagen. Schreibe so, wie ich mit einer Freundin reden würde, nicht wie in einem Blog-Artikel.
+3. WERT (3-5 Sätze): Der eigentliche Mehrwert. Eine Erkenntnis, ein Perspektivwechsel oder eine konkrete Methode. Formuliere es so, dass die Leserin danach etwas anders sieht oder sofort etwas ausprobieren kann.
+4. BRÜCKE ZUM ANGEBOT (1-2 Sätze): Eine natürliche Verbindung zwischen dem Wert und meinem Angebot. Keine harte Verkaufsansage, sondern ein logischer nächster Schritt.
+5. CALL-TO-ACTION (1 Satz): Klar, konkret, eine einzige Handlung. Nicht "Schreib mir" und "Speichere den Post" und "Teile ihn" gleichzeitig.
+
+Regeln:
+- Maximal 2200 Zeichen
+- Keine Emojis
+- Keine Gedankenstriche als Satztrenner
+- Vollständige Sätze mit Verben
+- Vermeide: "Stell dir vor", "In der heutigen Zeit", "Game Changer", "Der Shift", "Aha-Moment"
+- Schreibe 3 verschiedene Hook-Varianten, damit ich die beste auswählen kann`
   },
   {
     num: "03",
     icon: "💡",
     title: "Ideen Finden",
     desc: "Wenn dir die Themen ausgehen und du 15 frische, relevante Content-Ideen brauchst.",
-    prompt: `Du bist ein kreativer Content-Stratege. Generiere 15 Content-Ideen für die Nische {{NISCHE}}. Zielgruppe: {{ZIELGRUPPE}}. Mein Angebot: {{ANGEBOT}}. Für jede Idee: ein konkreter Titel, das beste Format (Carousel, Reel, Story), warum das Thema die Zielgruppe interessiert und wie es auf mein Angebot einzahlt. Sortiere die Ideen nach Relevanz. Mische Edukation, Unterhaltung und Inspiration. Vermeide generische Themen.`
+    prompt: `Du bist ein Content-Stratege, der auf Nischen-Content für Instagram spezialisiert ist. Generiere 15 Content-Ideen, die nicht generisch sind, sondern wirklich zu meiner spezifischen Positionierung passen.
+
+Mein Kontext:
+- Nische: {{NISCHE}}
+- Zielgruppe: {{ZIELGRUPPE}}
+- Mein Angebot: {{ANGEBOT}}
+
+Anforderungen:
+1. Vermeide Themen die jeder in meiner Nische schon 100 Mal gepostet hat. Finde Winkel die überraschen, die einen Perspektivwechsel bieten oder die ein Thema aus einem unerwarteten Blickwinkel beleuchten.
+2. Für jede Idee liefere:
+   - Arbeitstitel (konkret, nicht generisch)
+   - Format: Carousel, Reel oder Story-Serie (mit Begründung warum dieses Format)
+   - Hook für Slide 1 / erste Sekunde (maximal 8 Wörter)
+   - Der eine Satz der die Kernaussage zusammenfasst
+   - Warum die Zielgruppe das interessiert (welcher Schmerzpunkt oder welches Verlangen wird angesprochen?)
+   - Wie es auf mein Angebot einzahlt (Awareness, Vertrauen, oder direkte Conversion?)
+   - Share-Potenzial (niedrig/mittel/hoch) mit Begründung
+
+3. Verteile die 15 Ideen auf diese Kategorien:
+   - 5x Edukation: Konkretes Wissen vermitteln, das die Zielgruppe sofort anwenden kann
+   - 3x Perspektivwechsel: Eine gängige Annahme hinterfragen oder umdrehen
+   - 3x Persönlichkeit: Einblicke in meinen Alltag, Learnings, Fehler, Prozesse
+   - 2x Proof: Ergebnisse zeigen, Vorher/Nachher, Testimonials, Zahlen
+   - 2x Community: Fragen stellen, Umfragen, Diskussionen anstoßen
+
+4. Sortiere die Ideen nach Reichweiten-Potenzial (höchstes zuerst)
+
+Wichtig: Jede Idee muss so spezifisch sein, dass sie nur in meiner Nische funktioniert. Wenn man "{{NISCHE}}" durch eine andere Nische ersetzen könnte und die Idee immer noch passt, ist sie zu generisch.`
   },
   {
     num: "04",
     icon: "✉️",
     title: "E-Mails Formulieren",
     desc: "Wenn du eine E-Mail schreiben willst, die wirklich geöffnet und gelesen wird.",
-    prompt: `Du bist ein erfahrener E-Mail-Marketer. Schreibe eine E-Mail für mein Business in der Nische {{NISCHE}}. Zielgruppe: {{ZIELGRUPPE}}. Mein Angebot: {{ANGEBOT}}. Tonalität: {{TONALITAET}}. Die E-Mail hat eine klickstarke Betreffzeile (maximal 50 Zeichen), einen persönlichen Einstieg, einen wertvollen Mittelteil mit einer konkreten Erkenntnis oder Methode, und einen Call-to-Action am Ende. Schreibe so, als würdest du einer einzelnen Person schreiben.`
+    prompt: `Du bist ein E-Mail-Marketing-Spezialist, der auf kleine Personal Brands spezialisiert ist. Schreibe eine E-Mail, die sich anfühlt wie eine persönliche Nachricht, nicht wie ein Newsletter.
+
+Mein Kontext:
+- Nische: {{NISCHE}}
+- Zielgruppe: {{ZIELGRUPPE}}
+- Mein Angebot: {{ANGEBOT}}
+- Tonalität: {{TONALITAET}}
+- Zweck der E-Mail: [Hier den Zweck einfügen: z.B. Willkommensmail, Nurture, Launch-Ankündigung, Warteliste, Nachfass]
+
+Anforderungen:
+1. BETREFFZEILE: Liefere 5 Varianten (maximal 50 Zeichen). Nutze Neugier, Spezifität oder Dringlichkeit. Keine Großbuchstaben-Schreier, keine Emojis. Die Betreffzeile muss sich lesen wie eine Nachricht von einer Freundin, nicht wie Werbung. Markiere deine Top-Empfehlung.
+
+2. PREVIEW-TEXT: Der Text der im Posteingang nach der Betreffzeile angezeigt wird (maximal 90 Zeichen). Muss die Betreffzeile ergänzen und zum Öffnen motivieren.
+
+3. E-MAIL-TEXT:
+   - Anrede: "Hey [Vorname]," (persönlich, nicht "Liebe Community")
+   - Einstieg (2-3 Sätze): Starte mit einer Beobachtung, einem Erlebnis oder einer Frage, die die Leserin sofort abholt. Kein "Ich hoffe dir geht es gut" oder "In meinem letzten Newsletter".
+   - Mittelteil (5-8 Sätze): Der eigentliche Wert. Eine Erkenntnis, eine Methode, eine Geschichte mit konkretem Takeaway. Schreibe so, dass die Leserin allein durch diese E-Mail etwas Nützliches mitnimmt, auch wenn sie nie kauft.
+   - Überleitung (1-2 Sätze): Verbinde den Wert natürlich mit dem nächsten Schritt. Kein abrupter Wechsel zu "Kauf jetzt".
+   - CTA: Ein einziger, klarer Call-to-Action. Formuliere ihn als Handlung, nicht als Frage ("Hier anmelden" statt "Willst du dich anmelden?").
+   - PS: Einen P.S.-Satz der einen zusätzlichen Grund liefert, warum jetzt der richtige Zeitpunkt ist, oder einen persönlichen Kommentar.
+
+4. Regeln: Kurze Absätze (maximal 3 Sätze pro Absatz). Keine Emojis. Schreibe so, wie ich zu einer einzelnen Person spreche. Die E-Mail soll sich auf dem Handy gut lesen lassen.`
   },
   {
     num: "05",
     icon: "📋",
     title: "Angebote Vorbereiten",
     desc: "Wenn du dein Angebot klar strukturieren und überzeugend formulieren willst.",
-    prompt: `Du bist ein erfahrener Angebotsberater. Erstelle eine Angebotsstruktur für {{ANGEBOT}} in der Nische {{NISCHE}}. Zielgruppe: {{ZIELGRUPPE}}. Tonalität: {{TONALITAET}}. Strukturiere das Angebot mit: Titel, Untertitel, Problem-Darstellung (was die Zielgruppe gerade erlebt), Transformation (wo sie nach dem Angebot steht), Module oder Leistungsbausteine (mit konkretem Nutzen pro Baustein), Preis-Anker, FAQ-Vorschläge und ein Zusammenfassungs-Pitch in 3 Sätzen.`
+    prompt: `Du bist ein Angebotsarchitekt für digitale Produkte und Dienstleistungen von Soloselbstständigen. Hilf mir, mein Angebot so zu strukturieren, dass es sich fast von allein verkauft.
+
+Mein Kontext:
+- Nische: {{NISCHE}}
+- Zielgruppe: {{ZIELGRUPPE}}
+- Mein Angebot: {{ANGEBOT}}
+- Tonalität: {{TONALITAET}}
+
+Erstelle folgende Bausteine:
+
+1. POSITIONIERUNGS-SATZ: Ein einzelner Satz nach dem Muster "[Angebot] hilft [Zielgruppe], [konkretes Ergebnis] zu erreichen, ohne [größte Angst/Hürde]." Liefere 3 Varianten.
+
+2. PROBLEM-LANDKARTE: Beschreibe in 5 Punkten die aktuelle Situation meiner Zielgruppe. Was erleben sie? Was frustriert sie? Welche Lösungen haben sie schon probiert? Nutze die Sprache die meine Zielgruppe selbst verwenden würde (O-Töne), keine Marketing-Sprache.
+
+3. TRANSFORMATION: Beschreibe das Vorher und Nachher. Nicht abstrakt ("mehr Erfolg"), sondern als konkreten Dienstag-Nachmittag: Was macht die Kundin VOR dem Angebot an einem typischen Arbeitstag, und was NACH dem Angebot?
+
+4. ANGEBOTS-ARCHITEKTUR:
+   - Name und Untertitel (3 Varianten)
+   - 4-6 Module oder Leistungsbausteine, jeweils mit: Titel, was die Kundin in diesem Modul lernt/bekommt (1 Satz), welches konkrete Ergebnis danach steht (1 Satz)
+   - 3 Boni die den wahrgenommenen Wert erhöhen (mit Einzelwert-Bezifferung)
+   - Anti-Risiko-Element: Garantie oder Testphase
+
+5. PREIS-KOMMUNIKATION: Formuliere 3 verschiedene Wege, den Preis zu präsentieren (Vergleichs-Anker, Auf-den-Tag-herunterbrechen, Investitions-Framing). Keine manipulativen Taktiken.
+
+6. FAQ: 7 Einwände die meine Zielgruppe haben wird, formuliert als Frage. Für jeden Einwand eine Antwort die den Einwand nicht wegargumentiert, sondern ernst nimmt und eine ehrliche Perspektive bietet.
+
+7. ELEVATOR-PITCH: Mein Angebot in 3 Sätzen zusammengefasst, so dass ich es in jedem Gespräch nutzen kann.`
   },
   {
     num: "06",
     icon: "💬",
     title: "Kundenantworten Schreiben",
     desc: "Wenn du professionelle Antwortvorlagen für häufige Anfragen brauchst.",
-    prompt: `Du bist ein erfahrener Kundenservice-Experte. Formuliere 5 professionelle Antwortvorlagen für häufige Kundenanfragen in der Nische {{NISCHE}}. Zielgruppe: {{ZIELGRUPPE}}. Mein Angebot: {{ANGEBOT}}. Tonalität: {{TONALITAET}}. Erstelle Vorlagen für: Erstkontakt-Anfrage, Preisfrage, Terminanfrage, Reklamation, Nachfass nach Erstgespräch. Jede Antwort ist empathisch, lösungsorientiert und führt zur nächsten Aktion.`
+    prompt: `Du bist ein Kommunikationsberater für Soloselbstständige, der auf empathische, verkaufsstarke Kundenkorrespondenz spezialisiert ist. Erstelle ein komplettes Set an Antwortvorlagen, die professionell klingen, aber nie nach Textbaustein.
+
+Mein Kontext:
+- Nische: {{NISCHE}}
+- Zielgruppe: {{ZIELGRUPPE}}
+- Mein Angebot: {{ANGEBOT}}
+- Tonalität: {{TONALITAET}}
+
+Erstelle Vorlagen für diese 8 Situationen:
+
+1. ERST-DM AUF INSTAGRAM: Jemand reagiert auf meinen Content und zeigt Interesse. Antwort die Gespräch eröffnet ohne sofort zu verkaufen. Stelle eine Frage die zeigt, dass ich wirklich verstehen will, wo die Person steht.
+
+2. PREISFRAGE ("Was kostet das?"): Die Person fragt direkt nach dem Preis, bevor sie den Wert kennt. Nenne den Preis transparent, aber rahme ihn mit dem konkreten Ergebnis. Kein "kommt drauf an" und kein Ausweichen.
+
+3. EINWAND "ICH MUSS NOCH ÜBERLEGEN": Empathische Antwort die Druck rausnimmt, aber eine konkrete nächste Aktion vorschlägt. Frage heraus was genau noch offen ist.
+
+4. EINWAND "IST GERADE KEIN GUTER ZEITPUNKT": Antwort die den Zeitpunkt-Einwand respektiert, aber aufzeigt, warum Warten das Problem nicht löst. Ohne Druck.
+
+5. NACH DEM ERSTGESPRÄCH (kein Abschluss): Follow-up 48 Stunden nach einem Gespräch in dem sich die Person nicht entschieden hat. Fasse die wichtigsten Punkte zusammen und mache ein zeitlich begrenztes Angebot.
+
+6. NACH DEM ERSTGESPRÄCH (Abschluss): Willkommensnachricht nach der Buchung. Feiere die Entscheidung, kläre nächste Schritte, baue Vorfreude auf.
+
+7. TESTIMONIAL ANFRAGEN: 4 Wochen nach Projektende um eine Bewertung bitten. Mache es leicht: Gib 3 konkrete Fragen vor, die die Person beantworten kann.
+
+8. REAKTIVIERUNG: Jemand war mal interessiert, hat sich aber nicht gemeldet. Nachricht nach 2-4 Wochen Stille, die nicht verzweifelt klingt.
+
+Für jede Vorlage:
+- Maximal 5 Sätze
+- Personalisierungsstellen markieren mit [NAME] und [SPEZIFISCHES DETAIL]
+- Den emotionalen Ton beschreiben (z.B. "warm aber bestimmt", "locker aber professionell")
+- Eine Zeile die ich NICHT schreiben soll (typischer Fehler in dieser Situation)`
   },
   {
     num: "07",
     icon: "🧠",
     title: "Brainstorming",
     desc: "Wenn du strukturierte Ideen in 5 Kategorien brauchst, um dein Business weiterzuentwickeln.",
-    prompt: `Du bist ein kreativer Business-Berater. Starte ein strukturiertes Brainstorming für mein Business in der Nische {{NISCHE}}. Zielgruppe: {{ZIELGRUPPE}}. Mein Angebot: {{ANGEBOT}}. Generiere Ideen in 5 Kategorien: neue Angebotsformate, Content-Serien, Kooperationsmöglichkeiten, Lead-Magnete und Community-Aktionen. Pro Kategorie mindestens 3 konkrete Ideen mit einer kurzen Begründung warum sie für meine Zielgruppe funktionieren.`
+    prompt: `Du bist ein kreativer Business-Sparringspartner, der mit mir ein intensives 30-Minuten-Brainstorming simuliert. Keine oberflächlichen Ideen, sondern durchdachte Konzepte mit Umsetzungsskizze.
+
+Mein Kontext:
+- Nische: {{NISCHE}}
+- Zielgruppe: {{ZIELGRUPPE}}
+- Mein aktuelles Angebot: {{ANGEBOT}}
+- Ich bin Soloselbstständig und habe begrenzte Zeit und Budget
+
+Brainstorme in diesen 6 Kategorien. Pro Kategorie 3 Ideen, und für jede Idee:
+- Die Idee in einem Satz
+- Warum sie für MEINE Zielgruppe funktioniert (nicht allgemein, sondern spezifisch)
+- Aufwand zur Umsetzung (Stunden + Euro realistisch geschätzt)
+- Erster konkreter Schritt den ich heute noch machen könnte
+
+KATEGORIEN:
+
+1. UMSATZ-HEBEL: Neue Angebotsformate oder Preismodelle die meinen bestehenden Wert besser monetarisieren. Denke an: Einstiegsangebote unter 50 Euro, Gruppen-Formate, Abo-Modelle, Done-for-you-Services, Workshops.
+
+2. CONTENT-SERIEN: Wiederkehrende Formate die eine eigene Marke innerhalb meines Accounts aufbauen. Jede Serie braucht: einen einprägsamen Namen, ein klares Format (z.B. "Jeden Dienstag X"), einen Wiedererkennungswert, und einen natürlichen Bezug zu meinem Angebot.
+
+3. LEAD-MAGNETE: Kostenlose Ressourcen die meine Zielgruppe anziehen und qualifizieren. Keine generischen PDFs, sondern Formate die ein konkretes Problem lösen und dabei zeigen, wie ich arbeite. Denke an: Quizze, Mini-Kurse, Vorlagen, Challenges, Checklisten, Rechner.
+
+4. KOOPERATIONEN: Konkrete Personen-Typen oder Marken in angrenzenden Nischen, mit denen ich zusammenarbeiten könnte. Für jede Kooperation: Was ist das gemeinsame Thema? Was bringt jeder mit? Welches Format eignet sich (Live, gemeinsamer Post, Gastbeitrag, Bundle)?
+
+5. COMMUNITY-AKTIONEN: Maßnahmen die meine bestehende Audience aktivieren und Bindung aufbauen. Denke an: Challenges, Q&A-Formate, Behind-the-Scenes, Umfragen die echte Entscheidungen beeinflussen, gemeinsame Projekte.
+
+6. WILDCARD: Eine unkonventionelle Idee die nicht in die anderen Kategorien passt. Etwas das in meiner Nische niemand macht und das dadurch auffällt. Darf riskant sein, muss aber begründbar sein.
+
+Markiere am Ende deine Top-3-Empfehlungen über alle Kategorien und begründe die Reihenfolge.`
   },
   {
     num: "08",
     icon: "📆",
     title: "Wochenplanung",
     desc: "Wenn du als Soloselbstständige eine realistische, produktive Woche planen willst.",
-    prompt: `Du bist ein erfahrener Produktivitätsberater. Erstelle eine strukturierte Wochenplanung für mein Business in der Nische {{NISCHE}}. Mein Angebot: {{ANGEBOT}}. Zielgruppe: {{ZIELGRUPPE}}. Plane eine typische Woche mit Zeitblöcken für: Content-Erstellung, Community-Management, Kundenarbeit, Weiterbildung, Strategie und Admin. Berücksichtige, dass ich Soloselbstständig bin und maximal 4-5 produktive Stunden pro Tag habe. Gib mir einen Tagesrhythmus der realistisch umsetzbar ist.`
+    prompt: `Du bist ein Produktivitätsberater, der auf Soloselbstständige mit begrenzter Zeit spezialisiert ist. Keine Hustle-Culture, sondern ein Plan der langfristig durchhaltbar ist.
+
+Mein Kontext:
+- Nische: {{NISCHE}}
+- Mein Angebot: {{ANGEBOT}}
+- Zielgruppe: {{ZIELGRUPPE}}
+- Ich habe maximal 4-5 produktive Stunden pro Tag für mein Business
+- [Optional: Weitere Rahmenbedingungen hier einfügen, z.B. "Ich bin nebenbei angestellt" oder "Ich habe Kinder" oder "Ich arbeite 3 Tage die Woche am Business"]
+
+Erstelle eine Wochenstruktur mit folgenden Anforderungen:
+
+1. WOCHEN-ÜBERSICHT: Plane Montag bis Freitag, jeder Tag hat ein Hauptthema:
+   - Ein Tag für Content-Produktion (Batch-Erstellung)
+   - Ein Tag für Kundenarbeit und Calls
+   - Ein Tag für Strategie, Weiterbildung und Business-Development
+   - Ein Tag für Community-Arbeit, Netzwerken und Sichtbarkeit
+   - Ein Tag als Flex-Tag für Liegengebliebenes oder kreative Projekte
+
+2. TAGES-RHYTHMUS: Für jeden Tag einen konkreten Ablauf mit Uhrzeiten:
+   - Morgenroutine (15 Min): Was ich als Erstes tue, bevor ich in die Arbeit starte
+   - Deep-Work-Block (2-3 Stunden): Die wichtigste Aufgabe des Tages, ohne Ablenkung
+   - Pause
+   - Admin-Block (1 Stunde): E-Mails, DMs, Organisatorisches
+   - Light-Work-Block (1 Stunde): Aufgaben die wenig Energie brauchen (Community, Recherche, Planung)
+
+3. WIEDERKEHRENDE ROUTINEN:
+   - Tägliche 10-Minuten-Routine für Instagram (Stories, DMs beantworten, Community)
+   - Wöchentliche 30-Minuten-Review am Freitag (Was lief, was nicht, was nächste Woche)
+   - Monatliche 2-Stunden-Strategie-Session (Zahlen checken, nächsten Monat planen)
+
+4. ENERGIE-MANAGEMENT: Markiere für jeden Zeitblock ob er hohe, mittlere oder niedrige Energie braucht. Lege energieintensive Aufgaben in die Zeit, in der ich am produktivsten bin (meist morgens).
+
+5. NOTFALL-PLAN: Was passiert wenn ein Tag komplett ausfällt? Welche 3 Aufgaben sind die absoluten Must-Dos pro Woche, die ich auch in einer schlechten Woche schaffe?
+
+Formatiere alles als übersichtlichen Wochenplan den ich ausdrucken und an die Wand hängen kann.`
   },
   {
     num: "09",
     icon: "🔍",
     title: "Recherche",
     desc: "Wenn du Trends, Schmerzpunkte und Positionierungswinkel für deine Nische verstehen willst.",
-    prompt: `Du bist ein gründlicher Recherche-Assistent. Recherchiere aktuelle Trends und Entwicklungen in der Nische {{NISCHE}}. Zielgruppe: {{ZIELGRUPPE}}. Mein Angebot: {{ANGEBOT}}. Identifiziere: die 5 wichtigsten aktuellen Themen in meiner Nische, häufige Fragen meiner Zielgruppe, Schmerzpunkte die noch unterrepräsentiert sind, 3 Positionierungswinkel die mich von anderen abheben könnten, und konkrete Content-Themen die sich daraus ergeben.`
+    prompt: `Du bist ein Marktforscher und Positionierungsberater. Erstelle eine tiefgehende Analyse meiner Nische, die mir hilft Content zu erstellen der wirklich trifft und mich von anderen abhebt.
+
+Mein Kontext:
+- Nische: {{NISCHE}}
+- Zielgruppe: {{ZIELGRUPPE}}
+- Mein Angebot: {{ANGEBOT}}
+
+Analysiere folgende Bereiche:
+
+1. SCHMERZPUNKT-HIERARCHIE: Die 10 größten Frustrationen meiner Zielgruppe, sortiert nach Dringlichkeit. Für jeden Schmerzpunkt:
+   - Wie die Zielgruppe das Problem selbst beschreiben würde (O-Ton, keine Marketing-Sprache)
+   - Die emotionale Ebene dahinter (welches tiefere Bedürfnis steckt da drin?)
+   - Wie dieser Schmerzpunkt zu meinem Angebot führt
+
+2. WETTBEWERBS-LANDKARTE: Beschreibe die 4 typischen Positionierungen die andere in meiner Nische einnehmen. Für jede Position: Was sie versprechen, welche Sprache sie nutzen, wo ihre blinden Flecken sind. Dann zeige mir 3 Positionierungslücken, die ich besetzen könnte.
+
+3. CONTENT-GOLDMINEN: 5 Themen die meine Zielgruppe sich nicht traut laut zu fragen, aber dringend wissen will. Das sind die Themen mit dem höchsten Engagement-Potenzial, weil sie echte Unsicherheiten ansprechen.
+
+4. EINWAND-KATALOG: Die 7 häufigsten Einwände die meine Zielgruppe gegen Angebote wie meins hat. Für jeden Einwand: Woher er kommt (schlechte Erfahrung, Angst, Unwissen), und wie ich ihn in Content vorwegnehmen kann, BEVOR er im Verkaufsgespräch auftaucht.
+
+5. TREND-RADAR: 3 aktuelle Entwicklungen in meiner Nische, die ich für Content nutzen kann. Für jeden Trend: Ist er kurzfristig (3 Monate) oder langfristig? Welchen Content-Winkel kann ich daraus machen? Wie positioniere ich mich dazu (Pro, Contra, differenziert)?
+
+6. SPRACH-ANALYSE: Sammle 15 typische Sätze, Redewendungen und Ausdrücke die meine Zielgruppe tatsächlich benutzt. Unterteilt in: Wie sie ihre Probleme beschreiben, wie sie ihre Wünsche formulieren, und welche Wörter Vertrauen auslösen oder zerstören.`
   },
   {
     num: "10",
     icon: "✏️",
     title: "Texte Verbessern",
     desc: "Wenn dein Text gut ist, aber noch schärfer und wirkungsvoller werden soll.",
-    prompt: `Du bist ein erfahrener Lektor und Copywriter. Verbessere den folgenden Text für die Nische {{NISCHE}}. Zielgruppe: {{ZIELGRUPPE}}. Tonalität: {{TONALITAET}}. Achte auf: klare Struktur, aktive Sprache, emotionale Hooks, konkrete Beispiele statt abstrakter Aussagen, und einen starken Schluss. Entferne Füllwörter und Passivkonstruktionen. Behalte meine Stimme bei, mache den Text aber schärfer und wirkungsvoller. [Hier deinen Text einfügen]`
+    prompt: `Du bist ein Lektor und Copywriter mit einem scharfen Auge für überflüssige Wörter, schwache Stellen und ungenutztes Potenzial. Deine Aufgabe: Meinen Text besser machen, ohne meine Stimme zu verändern.
+
+Mein Kontext:
+- Nische: {{NISCHE}}
+- Zielgruppe: {{ZIELGRUPPE}}
+- Tonalität: {{TONALITAET}}
+
+Gehe den Text in 4 Durchgängen durch:
+
+DURCHGANG 1 — DIAGNOSE:
+Lies den Text einmal komplett und identifiziere:
+- Die stärkste Stelle (markiere sie und erkläre warum sie funktioniert)
+- Die schwächste Stelle (markiere sie und erkläre was nicht funktioniert)
+- Den emotionalen Bogen: Hat der Text einen? Wenn nicht, wo bricht er ab?
+- Die Kernaussage: Kann ich sie in einem Satz zusammenfassen? Wenn nein, ist der Text unklar.
+
+DURCHGANG 2 — SCHNITT:
+Entferne oder ersetze:
+- Füllwörter: "eigentlich", "irgendwie", "quasi", "grundsätzlich", "sozusagen", "natürlich"
+- Passivkonstruktionen: Ersetze durch aktive Sprache
+- Abstrakte Aussagen: Ersetze durch konkrete Beispiele oder Bilder
+- Wiederholungen: Gleiche Gedanken in anderen Worten
+- Weichmacher: "vielleicht", "könnte", "würde" — wenn ich etwas meine, sage ich es direkt
+
+DURCHGANG 3 — SCHÄRFUNG:
+- Stärke den Einstieg: Die ersten 2 Sätze entscheiden ob jemand weiterliest. Sind sie stark genug?
+- Prüfe jeden Absatz: Wenn ich den Absatz streiche, fehlt dem Text dann etwas? Wenn nein, streichen.
+- Stärke den Schluss: Der letzte Satz muss sitzen. Wie eine Tür die ins Schloss fällt.
+- Baue Rhythmus ein: Wechsle zwischen kurzen und längeren Sätzen. Kurzer Satz. Dann ein längerer, der etwas entfaltet und dem Gedanken Raum gibt. Dann wieder kurz.
+
+DURCHGANG 4 — AUSGABE:
+Liefere:
+1. Den überarbeiteten Text
+2. Eine Änderungsliste: Was habe ich geändert und warum (maximal 8 Punkte)
+3. 2 alternative Überschriften/Einstiege falls der Text eine hat
+
+[Hier deinen Text einfügen]`
   },
   {
     num: "11",
     icon: "📊",
     title: "Präsentationen Strukturieren",
     desc: "Wenn du einen Vortrag, ein Webinar oder eine Sales-Präsentation aufbauen willst.",
-    prompt: `Du bist ein erfahrener Präsentationsberater. Erstelle eine Foliengliederung für eine Präsentation über {{NISCHE}}. Zielgruppe: {{ZIELGRUPPE}}. Mein Angebot: {{ANGEBOT}}. Tonalität: {{TONALITAET}}. Strukturiere die Präsentation mit maximal 15 Folien: Titelfolie, Problem-Einstieg, 3-5 Kernpunkte mit je einer Folie, eine Case Study oder ein Beispiel, die Lösung (mein Angebot), nächste Schritte, Q&A-Folie. Für jede Folie: Überschrift, 3 Stichpunkte, eine Sprecher-Notiz.`
+    prompt: `Du bist ein Präsentationsberater, der auf Webinare und Vorträge für Soloselbstständige spezialisiert ist. Hilf mir, eine Präsentation zu bauen die nicht langweilt, sondern fesselt und am Ende eine klare Handlungsaufforderung hat.
+
+Mein Kontext:
+- Nische: {{NISCHE}}
+- Zielgruppe: {{ZIELGRUPPE}}
+- Mein Angebot: {{ANGEBOT}}
+- Tonalität: {{TONALITAET}}
+- Art der Präsentation: [Webinar / Vortrag / Workshop / Sales-Call-Deck / Pitch]
+- Dauer: [z.B. 45 Minuten, 20 Minuten]
+
+Erstelle eine vollständige Foliengliederung:
+
+1. ERÖFFNUNG (3 Folien, 5 Minuten):
+   - Folie 1: Titelfolie mit einer Headline die neugierig macht (nicht den Titel der Veranstaltung, sondern ein Versprechen)
+   - Folie 2: "Wer bin ich" in 30 Sekunden. Nicht mein Lebenslauf, sondern: Warum bin ich die richtige Person für dieses Thema? Eine kurze Story die Kompetenz zeigt.
+   - Folie 3: "Was du heute mitnimmst" als konkretes Versprechen in 3 Bullet Points. Nicht vage ("Inspiration"), sondern spezifisch ("Eine Methode die du morgen früh um 9 Uhr anwenden kannst")
+
+2. PROBLEM-PHASE (3-4 Folien, 10 Minuten):
+   - Die aktuelle Situation der Zielgruppe beschreiben (mit O-Tönen und Szenarien die zum Kopfnicken bringen)
+   - Warum bisherige Lösungsversuche nicht funktioniert haben
+   - Den versteckten Grund benennen, den die meisten übersehen
+
+3. KERN-CONTENT (4-5 Folien, 15-20 Minuten):
+   - 3 Hauptpunkte, jeder mit eigenem Takeaway
+   - Pro Punkt: Konzept erklären, Beispiel zeigen, Ergebnis beschreiben
+   - Mindestens ein interaktives Element (Frage ans Publikum, kurze Übung, Live-Demo)
+
+4. ÜBERLEITUNG ZUM ANGEBOT (2-3 Folien, 5-10 Minuten):
+   - Zusammenfassung der 3 Hauptpunkte
+   - "Das war der Was-Teil. Jetzt zum Wie." Natürliche Brücke zu meinem Angebot.
+   - Angebot vorstellen mit klarem Ergebnis-Versprechen
+   - Social Proof (Testimonial, Zahlen, Beispiel)
+
+5. ABSCHLUSS (2 Folien):
+   - Konkreter nächster Schritt (ein einziger CTA)
+   - Q&A-Folie mit Kontaktdaten
+
+Für jede Folie liefere:
+- Überschrift (maximal 6 Wörter, die den Kern treffen)
+- Visuelles Element (was soll auf der Folie zu sehen sein? Weniger Text = besser)
+- Sprecher-Notiz: Was ich zu dieser Folie sage (3-5 Sätze, natürlich formuliert)
+- Timing: Wie lange diese Folie ca. dauert`
   },
   {
     num: "12",
     icon: "🔄",
     title: "Workflows Planen",
     desc: "Wenn du eine wiederkehrende Aufgabe analysieren und in der Hälfte der Zeit erledigen willst.",
-    prompt: `Du bist ein erfahrener Prozessoptimierer. Erstelle einen effizienten Workflow für mein Business in der Nische {{NISCHE}}. Mein Angebot: {{ANGEBOT}}. Zielgruppe: {{ZIELGRUPPE}}. Analysiere diese wiederkehrende Aufgabe: [Aufgabe hier einfügen]. Zerlege sie in klare Schritte, identifiziere Automatisierungspotenzial mit KI-Tools, erstelle eine Checkliste und schätze den Zeitaufwand pro Schritt. Ziel: Der Workflow soll in der Hälfte der Zeit erledigt sein.`
+    prompt: `Du bist ein Workflow-Architekt für Soloselbstständige, der sich mit KI-Automatisierung auskennt. Hilf mir, einen wiederkehrenden Prozess so zu optimieren, dass er halb so lange dauert, ohne dass die Qualität leidet.
+
+Mein Kontext:
+- Nische: {{NISCHE}}
+- Mein Angebot: {{ANGEBOT}}
+- Zielgruppe: {{ZIELGRUPPE}}
+- Der Prozess den ich optimieren will: [Hier den Prozess beschreiben, z.B. "Wöchentliche Content-Erstellung für Instagram: Ideen finden, Texte schreiben, Grafiken erstellen, einplanen, posten"]
+- Aktueller Zeitaufwand: [z.B. 8 Stunden pro Woche]
+
+Analysiere und optimiere in 5 Schritten:
+
+1. IST-ANALYSE: Zerlege meinen beschriebenen Prozess in einzelne Schritte. Für jeden Schritt:
+   - Was passiert genau?
+   - Geschätzter Zeitaufwand
+   - Energielevel benötigt (hoch/mittel/niedrig)
+   - Klassifizierung: kreativ (muss ich selbst machen), operativ (könnte delegiert/automatisiert werden), oder administrativ (sollte automatisiert werden)
+
+2. ENGPASS-IDENTIFIKATION:
+   - Welche Schritte dauern unverhältnismäßig lang?
+   - Wo entstehen Reibungsverluste (Tool-Wechsel, Entscheidungsmüdigkeit, fehlende Vorlagen)?
+   - Welche Schritte könnte ich batchen (mehrere auf einmal erledigen)?
+   - Wo mache ich Dinge doppelt, ohne es zu merken?
+
+3. OPTIMIERTER WORKFLOW: Der neue Prozess als nummerierte Schritt-für-Schritt-Anleitung mit:
+   - Klarer Reihenfolge
+   - Geschätztem Zeitaufwand pro Schritt (NEU)
+   - Welches Tool für welchen Schritt (bevorzuge: Claude, Canva, Notion, Google Sheets, Instagram-eigene Tools)
+   - Wo KI eingesetzt wird und wie (konkreter Prompt oder Tool-Tipp)
+
+4. CHECKLISTE: Eine Copy-Paste-fertige Checkliste die ich jede Woche durchgehen kann. Jeder Punkt mit Checkbox, Tool-Angabe und geschätzter Dauer.
+
+5. VORHER/NACHHER-VERGLEICH:
+   - Alter Zeitaufwand vs. neuer Zeitaufwand
+   - Was sich am meisten verbessert hat
+   - Ein Tipp für die erste Woche der Umstellung (denn neue Workflows brauchen Eingewöhnung)`
   },
   {
     num: "13",
     icon: "📄",
     title: "PDFs Analysieren",
     desc: "Wenn du aus einem Dokument schnell die wichtigsten Erkenntnisse und Handlungsempfehlungen ziehen willst.",
-    prompt: `Du bist ein analytischer Assistent. Analysiere das folgende Dokument für mein Business in der Nische {{NISCHE}}. Zielgruppe: {{ZIELGRUPPE}}. Mein Angebot: {{ANGEBOT}}. Extrahiere: die 5 wichtigsten Erkenntnisse, konkrete Zahlen oder Daten, Zitate die ich für Content nutzen kann, offene Fragen die sich ergeben, und 3 konkrete Handlungsempfehlungen die ich sofort umsetzen kann. Fasse alles in einer übersichtlichen Struktur zusammen. [Dokument hier einfügen]`
+    prompt: `Du bist ein analytischer Berater, der Dokumente so aufbereitet, dass Soloselbstständige sofort damit arbeiten können. Keine akademische Zusammenfassung, sondern: Was muss ich wissen, was kann ich tun, was kann ich ignorieren?
+
+Mein Kontext:
+- Nische: {{NISCHE}}
+- Zielgruppe: {{ZIELGRUPPE}}
+- Mein Angebot: {{ANGEBOT}}
+
+Analysiere das folgende Dokument und erstelle:
+
+1. EXECUTIVE SUMMARY (maximal 5 Sätze): Worum geht es, für wen ist es relevant, und was ist die wichtigste Erkenntnis? Schreibe es so, dass ich in 30 Sekunden entscheiden kann ob ich weiterlesen muss.
+
+2. DIE 5 WICHTIGSTEN ERKENNTNISSE: Für jede Erkenntnis:
+   - Die Erkenntnis in einem Satz
+   - Warum sie für mein Business in der Nische {{NISCHE}} relevant ist
+   - Was ich konkret damit anfangen kann (eine Handlung, nicht "darüber nachdenken")
+
+3. ZAHLEN UND DATEN: Alle konkreten Zahlen, Statistiken und Fakten aus dem Dokument, die ich für Content, Verkaufsgespräche oder Strategieentscheidungen nutzen kann. Formatiere sie als Bullet-Liste die ich direkt kopieren kann.
+
+4. ZITATE FÜR CONTENT: 3-5 Aussagen aus dem Dokument die ich (mit Quellenangabe) in meinem Content verwenden könnte. Für jedes Zitat: In welchem Content-Format würde es am besten funktionieren?
+
+5. OFFENE FRAGEN: Was beantwortet das Dokument NICHT, obwohl es für mein Business wichtig wäre? Wo muss ich weiter recherchieren?
+
+6. SOFORT-MASSNAHMEN: 3 konkrete Dinge die ich basierend auf diesem Dokument innerhalb der nächsten 7 Tage umsetzen sollte. Priorisiert nach: Aufwand (niedrig zuerst) und Wirkung (hoch zuerst).
+
+7. WEGLASS-EMPFEHLUNG: Welche Teile des Dokuments kann ich für meine Zwecke ignorieren, und warum?
+
+[Dokument hier einfügen oder als Datei anhängen]`
   },
   {
     num: "14",
     icon: "#️⃣",
     title: "Social-Media-Ideen",
     desc: "Wenn du 10 Instagram-Ideen mit hoher Share-Rate brauchst, fertig zum Umsetzen.",
-    prompt: `Du bist ein Social-Media-Stratege. Erstelle 10 Social-Media-Ideen speziell für Instagram in der Nische {{NISCHE}}. Zielgruppe: {{ZIELGRUPPE}}. Mein Angebot: {{ANGEBOT}}. Tonalität: {{TONALITAET}}. Für jede Idee: Slide-1-Hook (maximal 8 Wörter), Format, die 3 wichtigsten Punkte des Posts, und ein Call-to-Action. Mische Edukation (40%), Persönlichkeit (30%) und Verkauf (30%). Achte auf hohe Share-Wahrscheinlichkeit.`
+    prompt: `Du bist ein Instagram-Stratege, der sich auf organische Reichweite und virale Mechaniken spezialisiert hat. Erstelle 10 Post-Ideen die nicht nur Likes bekommen, sondern geteilt und gespeichert werden.
+
+Mein Kontext:
+- Nische: {{NISCHE}}
+- Zielgruppe: {{ZIELGRUPPE}}
+- Mein Angebot: {{ANGEBOT}}
+- Tonalität: {{TONALITAET}}
+
+Für jede der 10 Ideen liefere:
+
+1. SLIDE-1-HOOK: Maximal 8 Wörter. Das ist das Erste was man sieht. Es muss sofort zum Stoppen bringen. Nutze diese Mechaniken abwechselnd: Widerspruch ("Höre auf mit X"), Zahl + Versprechen ("3 Wege zu Y"), Identifikation ("Du bist nicht Z"), Neugier-Lücke ("Das sagt dir niemand über X").
+
+2. FORMAT: Carousel (5-8 Slides), Reel (30-60 Sek), Single Post oder Story-Serie. Mit Begründung warum dieses Format für diese Idee am besten funktioniert.
+
+3. INHALTS-SKIZZE:
+   - Bei Carousels: Slide-für-Slide-Übersicht (Headline + Kernpunkt pro Slide)
+   - Bei Reels: Hook, Problem, Lösung, CTA in je einem Satz
+   - Bei Single Posts: Die Kernaussage in 3 Sätzen
+
+4. SHARE-TRIGGER: Warum würde jemand diesen Post an eine Freundin, einen Kollegen oder Partner weiterleiten? Nenne den konkreten Grund. Posts werden geteilt wenn sie: jemanden erinnern ("Das musst du sehen"), einen eigenen Gedanken validieren ("Das sage ich auch immer"), oder ein praktisches Problem lösen ("Das brauche ich").
+
+5. CALL-TO-ACTION: Einer der folgenden, mit konkreter Formulierung:
+   - Kommentar-CTA (stellt eine Frage die leicht zu beantworten ist)
+   - Speichern-CTA (wenn der Post als Referenz dient)
+   - Teilen-CTA (wenn der Post für jemand anderen relevant ist)
+   - DM-CTA (wenn der Post zum Angebot führt)
+
+6. CONTENT-ZWECK:
+   - Reichweite (neue Follower anziehen)
+   - Vertrauen (Expertise zeigen)
+   - Conversion (zum Angebot führen)
+
+Verteile die 10 Ideen auf: 4x Reichweite, 3x Vertrauen, 3x Conversion.
+Sortiere sie so, dass ich sie in dieser Reihenfolge über 2 Wochen posten könnte (5 pro Woche).`
   },
   {
     num: "15",
     icon: "🎬",
     title: "Skripte Schreiben",
     desc: "Wenn du ein Reel-Skript brauchst, das natürlich klingt und in 60 Sekunden überzeugt.",
-    prompt: `Du bist ein erfahrener Video-Skript-Autor. Schreibe ein Reel-Skript für die Nische {{NISCHE}}. Zielgruppe: {{ZIELGRUPPE}}. Mein Angebot: {{ANGEBOT}}. Tonalität: {{TONALITAET}}. Struktur: Hook (erste 3 Sekunden, maximal 10 Wörter), Problem benennen, Lösung zeigen (3 konkrete Schritte), Transformation beschreiben, Call-to-Action. Maximale Länge: 60 Sekunden Sprechzeit. Schreibe so, wie man natürlich spricht, nicht wie man liest.`
+    prompt: `Du bist ein Video-Skript-Autor, der auf kurze Social-Media-Videos für Soloselbstständige spezialisiert ist. Schreibe ein Skript das klingt wie ein echter Mensch der etwas Wichtiges zu sagen hat, nicht wie ein Teleprompter-Text.
+
+Mein Kontext:
+- Nische: {{NISCHE}}
+- Zielgruppe: {{ZIELGRUPPE}}
+- Mein Angebot: {{ANGEBOT}}
+- Tonalität: {{TONALITAET}}
+- Thema des Reels: [Hier das Thema einfügen]
+
+Erstelle das Skript als Sprechgerüst (KEINE wörtliche Vorgabe, sondern 3-5 Bullet-Points pro Abschnitt die ich in meinen eigenen Worten sage):
+
+1. HOOK (Sekunde 0-3): Der allererste Satz. Maximal 10 Wörter. Liefere 3 Varianten:
+   - Variante A: Provokante Behauptung ("X ist der Grund warum Y nicht funktioniert")
+   - Variante B: Identifikations-Opener ("Wenn du X kennst, dann...")
+   - Variante C: Neugier-Gap ("Ich habe X gemacht und das Ergebnis hat mich überrascht")
+
+2. PROBLEM (Sekunde 3-12): Benenne das Problem so, dass die Zielgruppe denkt "Ja, genau das". Nutze eine spezifische Situation, kein abstraktes Problem. Stichpunkte:
+   - Die Situation die die Zielgruppe kennt (sehr konkret, visuell)
+   - Das Gefühl das dabei entsteht
+   - Warum bisherige Versuche nicht funktioniert haben (optional, wenn es die Story stärker macht)
+
+3. LÖSUNG (Sekunde 12-45): Die 3 konkreten Schritte oder Erkenntnisse. Pro Schritt:
+   - Ein Stichpunkt der den Kern beschreibt
+   - Ein konkretes Beispiel oder eine Zahl die es greifbar macht
+   - Formuliere es als Handlung ("Mach X" statt "Man sollte X")
+
+4. TRANSFORMATION (Sekunde 45-50): Was passiert wenn die Zuschauerin das umsetzt? Ein Satz der das Ergebnis beschreibt. Konkret, nicht abstrakt.
+
+5. CTA (Sekunde 50-60): Liefere 2 Varianten:
+   - Soft CTA: "Folge mir für mehr" oder "Speichere das Reel"
+   - Hard CTA: Zum Angebot führend ("Kommentiere X und ich schicke dir Y")
+
+ZUSÄTZLICH:
+- On-Screen-Text-Vorschläge: Was als Texteinblendung im Video stehen soll (maximal 5 Einblendungen)
+- B-Roll-Ideen: Was ich visuell zeigen kann (Bildschirm-Aufnahme, Gesicht-in-Kamera, Vorher/Nachher, Setup-Shots)
+- Musik-Stimmung: Welche Art von Hintergrundmusik passt (ruhig, energetisch, cinematic)
+- Geschätzte Sprechzeit: Bestätige dass das Skript in 60 Sekunden sprechbar ist`
   },
   {
     num: "16",
     icon: "📈",
     title: "Tabellen Analysieren",
     desc: "Wenn du Daten hast und wissen willst, was sie für dein Business bedeuten.",
-    prompt: `Du bist ein Datenanalyst. Analysiere die folgende Tabelle für mein Business in der Nische {{NISCHE}}. Zielgruppe: {{ZIELGRUPPE}}. Mein Angebot: {{ANGEBOT}}. Identifiziere: Trends und Muster, Ausreißer, die 3 wichtigsten Kennzahlen und was sie bedeuten, Handlungsempfehlungen basierend auf den Daten, und erstelle eine einfache Zusammenfassung die ich auch ohne Datenexpertise verstehe. [Tabelle hier einfügen]`
+    prompt: `Du bist ein Business-Analyst, der komplexe Daten in klare Handlungsempfehlungen für Soloselbstständige übersetzt. Keine Statistik-Vorlesung, sondern: Was muss ich ändern, beibehalten, stoppen?
+
+Mein Kontext:
+- Nische: {{NISCHE}}
+- Zielgruppe: {{ZIELGRUPPE}}
+- Mein Angebot: {{ANGEBOT}}
+- Art der Daten: [z.B. Instagram-Insights, Umsatzzahlen, E-Mail-Statistiken, Website-Analytics, Kursabschlussraten]
+
+Analysiere die Tabelle und erstelle:
+
+1. EXECUTIVE SUMMARY (3 Sätze): Die wichtigste positive Erkenntnis, die wichtigste negative Erkenntnis, und die eine Sache die ich als Erstes ändern sollte.
+
+2. TREND-ANALYSE:
+   - Was steigt? (mit konkreten Zahlen und Prozentwerten)
+   - Was fällt? (mit konkreten Zahlen und Prozentwerten)
+   - Was stagniert? (und ob das gut oder schlecht ist)
+   - Gibt es saisonale Muster oder Ausreißer? Was hat diese verursacht?
+
+3. DIE 3 WICHTIGSTEN KENNZAHLEN: Wähle aus den Daten die 3 Metriken die für mein Business am relevantesten sind. Für jede:
+   - Aktueller Wert
+   - Benchmark: Was wäre ein guter Wert in meiner Nische?
+   - Bewertung: Bin ich über oder unter dem Benchmark?
+   - Hebel: Was genau kann ich tun um diese Zahl zu verbessern?
+
+4. VERSTECKTE INSIGHTS: 2-3 Muster die nicht offensichtlich sind. Korrelationen, Zusammenhänge oder Überraschungen die erst bei genauem Hinsehen sichtbar werden.
+
+5. HANDLUNGSEMPFEHLUNGEN: 3 konkrete Maßnahmen, priorisiert nach Wirkung:
+   - Quick Win (diese Woche umsetzbar, kleiner Aufwand, sichtbarer Effekt)
+   - Medium-Term (nächste 30 Tage, größerer Hebel)
+   - Strategie-Shift (grundsätzliche Änderung die sich langfristig auszahlt)
+
+6. TRACKING-EMPFEHLUNG: Welche 3 Zahlen sollte ich ab jetzt wöchentlich tracken? In welchem Format (Tabelle, Chart, Dashboard)? Was sind die Zielwerte für den nächsten Monat?
+
+Erkläre alles so, dass ich es ohne Datenanalyse-Hintergrund verstehe. Verwende konkrete Beispiele statt Fachbegriffe.
+
+[Tabelle hier einfügen]`
   },
   {
     num: "17",
     icon: "🎯",
     title: "Strategien Entwickeln",
     desc: "Wenn du eine klare 90-Tage-Strategie brauchst, die als Soloselbstständige umsetzbar ist.",
-    prompt: `Du bist ein erfahrener Business-Stratege. Entwickle eine 90-Tage-Strategie für mein Business in der Nische {{NISCHE}}. Zielgruppe: {{ZIELGRUPPE}}. Mein Angebot: {{ANGEBOT}}. Tonalität: {{TONALITAET}}. Gliedere die Strategie in 3 Phasen (je 30 Tage) mit: Hauptziel der Phase, 3 konkrete Meilensteine, tägliche und wöchentliche Aktionen, Metriken zur Erfolgsmessung, und Risiken mit Gegenmaßnahmen. Die Strategie muss als Soloselbstständige umsetzbar sein.`
+    prompt: `Du bist ein Business-Stratege für Soloselbstständige. Keine Konzern-Strategien mit 50-Seiten-Decks, sondern ein klarer Fahrplan den eine einzelne Person mit begrenzter Zeit tatsächlich umsetzen kann.
+
+Mein Kontext:
+- Nische: {{NISCHE}}
+- Zielgruppe: {{ZIELGRUPPE}}
+- Mein Angebot: {{ANGEBOT}}
+- Tonalität: {{TONALITAET}}
+- Mein aktuelles Hauptziel: [Hier einfügen, z.B. "Ersten Online-Kurs launchen", "Instagram auf 5.000 Follower bringen", "Monatlich 3 neue Kunden gewinnen"]
+- Meine größte Hürde gerade: [Hier einfügen]
+
+Erstelle eine 90-Tage-Strategie:
+
+PHASE 1 — FUNDAMENT (Tag 1-30):
+- Phasen-Ziel in einem Satz
+- 3 Meilensteine (messbar, mit konkretem Datum)
+- Wöchentliche Fokus-Aufgaben (maximal 3 pro Woche, realistisch für 4-5 Stunden/Tag)
+- Tägliche Gewohnheit die in 15 Minuten erledigt ist und diese Phase unterstützt
+- Metrik die ich tracken soll + Zielwert am Ende der Phase
+- Warnsignal: Woran merke ich, dass ich vom Plan abweiche?
+
+PHASE 2 — AUFBAU (Tag 31-60):
+- Gleiche Struktur wie Phase 1
+- Was ändert sich gegenüber Phase 1?
+- Welches Ergebnis aus Phase 1 ist Voraussetzung?
+- Ein "Stresstest": Was passiert wenn Phase 1 nicht zu 100% geklappt hat? Wie passe ich Phase 2 an?
+
+PHASE 3 — ERNTE (Tag 61-90):
+- Gleiche Struktur wie Phase 1
+- Wie führe ich die Ergebnisse aus Phase 1 und 2 zusammen?
+- Der konkrete Launch-Moment oder die Conversion-Aktion
+- Nachbereitung: Was passiert an Tag 91? Wie geht es weiter?
+
+RISIKO-ANALYSE:
+- Die 3 wahrscheinlichsten Gründe warum dieser Plan scheitern könnte
+- Für jeden Grund: Eine konkrete Gegenmaßnahme und ein Plan B
+
+WEEKLY CHECK-IN TEMPLATE:
+5 Fragen die ich mir jeden Freitag in 10 Minuten beantworten kann um auf Kurs zu bleiben.
+
+NORTH-STAR-SATZ:
+Formuliere einen Satz der mein 90-Tage-Ziel so zusammenfasst, dass ich ihn mir an den Monitor kleben kann. Kein Motivationsspruch, sondern mein konkretes Ziel.`
   },
   {
     num: "18",
     icon: "⚙️",
     title: "Prozesse Vereinfachen",
     desc: "Wenn du einen Ablauf hast, der zu viele Schritte hat und zu viel Zeit kostet.",
-    prompt: `Du bist ein Effizienz-Berater. Vereinfache den folgenden Geschäftsprozess in der Nische {{NISCHE}}. Mein Angebot: {{ANGEBOT}}. Zielgruppe: {{ZIELGRUPPE}}. Analysiere den aktuellen Ablauf, identifiziere Engpässe, Doppelarbeiten und unnötige Schritte. Schlage einen optimierten Prozess vor mit: weniger Schritten, KI-Automatisierung wo möglich, klaren Verantwortlichkeiten und einem geschätzten Zeitgewinn. [Prozess hier beschreiben]`
+    prompt: `Du bist ein Prozessoptimierer für Soloselbstständige, der sich mit KI-Tools und Automatisierung auskennt. Dein Ansatz: Nicht alles automatisieren was geht, sondern die richtigen Dinge vereinfachen und die menschlichen Stärken dort einsetzen wo sie zählen.
+
+Mein Kontext:
+- Nische: {{NISCHE}}
+- Mein Angebot: {{ANGEBOT}}
+- Zielgruppe: {{ZIELGRUPPE}}
+
+Der Prozess den ich vereinfachen will:
+[Hier den aktuellen Ablauf beschreiben, Schritt für Schritt. Beispiel: "1. Idee für Post überlegen (30 Min), 2. Text schreiben (45 Min), 3. In Canva Grafik erstellen (30 Min), 4. Caption schreiben (20 Min), 5. In Instagram einplanen (10 Min), 6. Hashtags recherchieren (15 Min)"]
+
+Analysiere in 4 Schritten:
+
+1. RÖNTGEN-ANALYSE: Visualisiere den aktuellen Prozess als Flow und klassifiziere jeden Schritt:
+   - KREATIV (braucht mein Gehirn, meine Stimme, meine Perspektive) → nicht automatisieren
+   - OPERATIV (folgt einem Muster, braucht Entscheidungen aber keine Kreativität) → vereinfachen mit Templates/KI
+   - ADMINISTRATIV (repetitiv, regelbasiert, keine Kreativität) → automatisieren oder eliminieren
+   - UNNÖTIG (Gewohnheit, aber liefert keinen Wert) → sofort streichen
+
+2. OPTIMIERTER PROZESS: Der neue Ablauf mit:
+   - Nummerierte Schritte in optimaler Reihenfolge
+   - Für jeden Schritt: Welches Tool, welcher Prompt (bei KI-Einsatz), welche Vorlage
+   - Batching-Empfehlungen: Welche Schritte kann ich für eine ganze Woche am Stück erledigen?
+   - Geschätzte Zeitersparnis pro Schritt
+   - Gesamte Zeitersparnis (Vorher vs. Nachher)
+
+3. KI-PROMPTS UND VORLAGEN: Für jeden Schritt der KI nutzt:
+   - Den konkreten Prompt den ich in Claude eingeben kann
+   - Ein Beispiel wie das Ergebnis aussehen soll
+   - Worauf ich beim Ergebnis achten muss (Quality-Check)
+
+4. IMPLEMENTIERUNGSPLAN:
+   - Woche 1: Welche Änderung führe ich zuerst ein? (die mit dem größten Quick Win)
+   - Woche 2: Was kommt dazu?
+   - Woche 3: Der komplette neue Workflow läuft
+   - Troubleshooting: Was mache ich wenn der neue Prozess sich anfangs langsamer anfühlt? (Ist normal, wird besser)
+
+Bonus: Schätze den ROI in Stunden pro Monat. Wenn ich X Stunden spare, was könnte ich in dieser Zeit stattdessen tun das mein Business weiterbringt?`
   },
   {
     num: "19",
     icon: "📂",
     title: "Dokumente Strukturieren",
     desc: "Wenn du professionelle, konsistente Dokumentenstrukturen und Vorlagentexte brauchst.",
-    prompt: `Du bist ein Dokumentations-Experte. Erstelle eine professionelle Dokumentenstruktur für {{ANGEBOT}} in der Nische {{NISCHE}}. Zielgruppe: {{ZIELGRUPPE}}. Tonalität: {{TONALITAET}}. Erstelle: eine klare Gliederung mit Hauptkapiteln und Unterabschnitten, Formatierungsrichtlinien, Vorlagen-Texte für wiederkehrende Abschnitte (Einleitung, Zusammenfassung, Handlungsaufforderung), und einen Style Guide für konsistente Kommunikation.`
+    prompt: `Du bist ein Dokumentations-Architekt, der Soloselbstständige dabei unterstützt, professionelle, wiederverwendbare Dokumente zu erstellen. Keine aufgeblähten Corporate-Dokumente, sondern schlanke, wirksame Vorlagen die meine Marke transportieren.
+
+Mein Kontext:
+- Nische: {{NISCHE}}
+- Zielgruppe: {{ZIELGRUPPE}}
+- Mein Angebot: {{ANGEBOT}}
+- Tonalität: {{TONALITAET}}
+- Dokument-Typ: [Hier einfügen: z.B. Kurs-Workbook, Onboarding-Guide, Angebots-PDF, Media-Kit, Freebie, Coaching-Handbuch, FAQ-Dokument]
+
+Erstelle:
+
+1. STRUKTUR-GERÜST: Eine komplette Gliederung mit:
+   - Alle Hauptkapitel und Unterabschnitte
+   - Für jedes Kapitel: Zweck (was soll die Leserin danach wissen/können?), geschätzte Länge, und ob es Text, Grafik, Checkliste oder Übung enthält
+   - Logischer Aufbau: Vom Einfachen zum Komplexen, vom Problem zur Lösung
+
+2. VORLAGE-TEXTE für wiederkehrende Abschnitte:
+   - Willkommens-/Einleitungstext (2-3 Absätze, in meiner Tonalität)
+   - Kapitel-Einleitungen (1 Absatz-Template mit Platzhaltern)
+   - Zusammenfassungen ("Das Wichtigste aus diesem Kapitel")
+   - Handlungsaufforderungen ("Dein nächster Schritt")
+   - Abschlusstext mit Motivation und nächsten Schritten
+
+3. DESIGN-RICHTLINIEN: Empfehlungen für die visuelle Gestaltung:
+   - Überschriften-Hierarchie (H1, H2, H3 mit Formatierungsvorschlag)
+   - Textformatierung (Schriftgröße, Zeilenabstand, Absatzabstände)
+   - Farb-Einsatz (Akzentfarben für Boxen, Highlights, Überschriften)
+   - Wiederkehrende Design-Elemente (Tipp-Boxen, Warnung-Boxen, Beispiel-Boxen, Checklisten-Style)
+   - Seitenränder und Weißraum-Empfehlung
+
+4. KONSISTENZ-CHECKLISTE: 10 Punkte die ich vor dem Finalisieren prüfen soll:
+   - Einheitliche Ansprache (du/Sie konsequent?)
+   - Begriffe-Konsistenz (gleiche Begriffe für gleiche Konzepte?)
+   - Formatierung konsistent?
+   - Alle Platzhalter gefüllt?
+   - Etc.
+
+5. WIEDERVERWENDBARKEIT: Markiere welche Textbausteine ich für zukünftige Dokumente wiederverwenden kann. Erstelle eine Mini-Bibliothek mit 5 Textbausteinen die in verschiedenen Dokumenten funktionieren.`
   },
   {
     num: "20",
     icon: "📋",
     title: "Projekte Organisieren",
     desc: "Wenn du ein Projekt strukturieren und als Soloselbstständige durchziehen willst.",
-    prompt: `Du bist ein erfahrener Projektmanager. Erstelle einen Projektplan für folgendes Vorhaben in der Nische {{NISCHE}}: [Projekt hier beschreiben]. Mein Angebot: {{ANGEBOT}}. Zielgruppe: {{ZIELGRUPPE}}. Strukturiere den Plan mit: Projektziel in einem Satz, Meilensteine mit Deadlines, Aufgabenpakete pro Meilenstein, geschätzter Zeitaufwand pro Aufgabe, Abhängigkeiten zwischen Aufgaben, und eine wöchentliche Check-in-Struktur. Das Projekt muss als Soloselbstständige machbar sein.`
+    prompt: `Du bist ein Projektmanager für Soloselbstständige. Du weißt, dass das Hauptproblem nie der Plan ist, sondern die Umsetzung, wenn man alles alleine macht, ständig Entscheidungen treffen muss und keine Deadline von außen hat.
+
+Mein Kontext:
+- Nische: {{NISCHE}}
+- Mein Angebot: {{ANGEBOT}}
+- Zielgruppe: {{ZIELGRUPPE}}
+- Mein Projekt: [Hier beschreiben, z.B. "Online-Kurs erstellen und launchen", "Website neu aufsetzen", "Instagram-Account von 0 auf 1000 Follower", "Erstes Webinar veranstalten"]
+- Gewünschter Zeitrahmen: [z.B. 6 Wochen, 3 Monate]
+- Stunden pro Woche die ich dafür habe: [z.B. 10 Stunden]
+
+Erstelle einen Projektplan der auch dann funktioniert, wenn ich mal eine schlechte Woche habe:
+
+1. PROJEKT-DEFINITION:
+   - Projektziel in einem Satz (Was ist das Ergebnis? Nicht der Prozess, sondern das fertige Ding.)
+   - Erfolgskriterien: Woran messe ich ob das Projekt erfolgreich war? (2-3 messbare Kriterien)
+   - Anti-Ziele: Was ist dieses Projekt NICHT? (Scope-Creep verhindern)
+   - Voraussetzungen: Was muss existieren bevor ich starten kann?
+
+2. MEILENSTEINE: 4-6 Meilensteine mit:
+   - Datum (kalkuliert basierend auf meinen verfügbaren Stunden)
+   - Ergebnis das am Meilenstein fertig sein muss
+   - Feier-Moment: Wie belohne ich mich? (klingt albern, ist wichtig für Solo-Motivation)
+   - Go/No-Go Entscheidung: Was muss funktionieren bevor ich zum nächsten Meilenstein gehe?
+
+3. AUFGABENPAKETE pro Meilenstein:
+   - Einzelne Aufgaben (so klein, dass jede in einer Sitzung erledigt werden kann, maximal 2 Stunden)
+   - Geschätzter Zeitaufwand pro Aufgabe
+   - Abhängigkeiten: Was muss vorher fertig sein?
+   - Energielevel: Hoch (kreativ, braucht frischen Kopf), Mittel, Niedrig (kann ich auch müde machen)
+   - Markiere Aufgaben die ich an KI delegieren kann (mit Prompt-Vorschlag)
+
+4. WOCHEN-SPRINT-VORLAGE:
+   - Montag: Die 3 Aufgaben die ich diese Woche erledigen MUSS
+   - Mittwoch: Quick Check, liege ich im Plan?
+   - Freitag: 10-Minuten-Review (Was ist fertig, was verschiebe ich, was brauche ich?)
+
+5. PUFFER UND PLAN B:
+   - Wo ist der größte Puffer eingebaut? (mindestens 20% der Zeit als Reserve)
+   - Was passiert wenn ich eine komplette Woche ausfalle? Wie hole ich auf?
+   - "Minimal Viable Version": Wenn alles schiefgeht, was ist die kleinste Version dieses Projekts die trotzdem Wert liefert?
+
+6. ACCOUNTABILITY-SYSTEM: Da ich keine Chefin habe, die nachfragt:
+   - Vorschlag für wöchentliche Selbst-Check-ins (3 Fragen, 5 Minuten)
+   - Wie ich mir selbst Deadlines setze, die ich ernst nehme
+   - Empfehlung: Sollte ich jemand anderem von diesem Projekt erzählen? (soziale Accountability)`
   }
 ];
 
