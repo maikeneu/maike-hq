@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcher Kurs hilft dir am meisten?</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --w0: #FAF7F2;
+    --w1: #F5EFE6;
+    --sand: #E8D9C5;
+    --latte: #C4A882;
+    --caramel: #A07850;
+    --brown: #7A5C3A;
+    --deep: #4A3220;
+    --espresso: #2C1E12;
+    --ink: #150D06;
+    --t0: #F0B898;
+    --t1: #C8714A;
+    --t2: #A05030;
+    --t3: #7A3A1E;
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    background: var(--ink);
+  }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--w0);
+    min-height: 100vh;
+    padding: 40px 20px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 55% 45% at 10% 10%, rgba(200,113,74,.14) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 35% at 90% 80%, rgba(160,80,48,.10) 0%, transparent 60%),
+      radial-gradient(ellipse 70% 30% at 50% 110%, rgba(74,50,32,.6) 0%, transparent 70%);
+  }
+
+  body::after {
+    content: ''; position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: .045;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 180px;
+  }
+
+  .container {
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.9rem;
+    text-align: center;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, var(--t0), var(--t1));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: var(--latte);
+    font-size: 0.95rem;
+    margin-bottom: 36px;
+  }
+
+  .option {
+    background: rgba(250,247,242,0.04);
+    border: 1px solid rgba(250,247,242,0.08);
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    user-select: none;
+  }
+
+  .option:hover {
+    background: rgba(200,113,74,0.08);
+    border-color: rgba(200,113,74,0.25);
+    transform: translateX(4px);
+  }
+
+  .option.selected {
+    background: rgba(200,113,74,0.12);
+    border-color: var(--t1);
+  }
+
+  .checkbox {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    border-radius: 6px;
+    border: 2px solid rgba(250,247,242,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+
+  .option.selected .checkbox {
+    background: var(--t1);
+    border-color: var(--t1);
+  }
+
+  .checkmark {
+    display: none;
+    color: var(--ink);
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .option.selected .checkmark {
+    display: block;
+  }
+
+  .option-text {
+    font-size: 1.05rem;
+    line-height: 1.4;
+    color: var(--sand);
+  }
+
+  .option.selected .option-text {
+    color: var(--w0);
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(200,113,74,0.15), transparent);
+    margin: 22px 0;
+  }
+
+  .section-label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--t1);
+    margin-bottom: 14px;
+    padding-left: 4px;
+    opacity: 0.7;
+  }
+
+  .results-panel {
+    margin-top: 36px;
+    background: rgba(250,247,242,0.03);
+    border: 1px solid rgba(250,247,242,0.06);
+    border-radius: 20px;
+    padding: 28px;
+  }
+
+  .results-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--t0);
+    margin-bottom: 18px;
+    text-align: center;
+  }
+
+  .result-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+  }
+
+  .result-bar-bg {
+    flex: 1;
+    height: 30px;
+    background: rgba(250,247,242,0.04);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .result-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--t2), var(--t1), var(--t0));
+    border-radius: 8px;
+    transition: width 0.5s ease;
+    min-width: 0;
+  }
+
+  .result-label {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8rem;
+    color: var(--w0);
+    white-space: nowrap;
+    text-shadow: 0 1px 4px rgba(21,13,6,0.7);
+  }
+
+  .result-count {
+    min-width: 36px;
+    text-align: right;
+    font-weight: 600;
+    color: var(--latte);
+    font-size: 0.85rem;
+  }
+
+  .total {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 0.9rem;
+    color: var(--brown);
+  }
+
+  .total span {
+    color: var(--t1);
+    font-weight: 600;
+  }
+
+  .reset-btn {
+    display: block;
+    margin: 20px auto 0;
+    background: none;
+    border: 1px solid rgba(250,247,242,0.1);
+    color: var(--brown);
+    padding: 8px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    transition: all 0.2s;
+  }
+
+  .reset-btn:hover {
+    border-color: rgba(200,113,74,0.35);
+    color: var(--t1);
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Welcher Kurs hilft dir am meisten?</h1>
+  <p class="subtitle">Klicke alles an, was dich interessiert. Mehrfachauswahl erlaubt.</p>
+
+  <div class="section-label">Grundlagen</div>
+
+  <div class="option" data-id="zweites-gehirn" onclick="toggle(this)">
+    <div class="checkbox"><span class="checkmark">&#10003;</span></div>
+    <span class="option-text">Das zweite Gehirn erstellen</span>
+  </div>
+
+  <div class="option" data-id="bibliothek" onclick="toggle(this)">
+    <div class="checkbox"><span class="checkmark">&#10003;</span></div>
+    <span class="option-text">Die grösste Bibliothek deines Lebens</span>
+  </div>
+
+  <div class="option" data-id="ki-stimme" onclick="toggle(this)">
+    <div class="checkbox"><span class="checkmark">&#10003;</span></div>
+    <span class="option-text">Deine KI-Stimme finden</span>
+  </div>
+
+  <div class="divider"></div>
+  <div class="section-label">KI-Mitarbeiter</div>
+
+  <div class="option" data-id="mitarbeiter-selbst" onclick="toggle(this)">
+    <div class="checkbox"><span class="checkmark">&#10003;</span></div>
+    <span class="option-text">Mitarbeiter selbst erstellen</span>
+  </div>
+
+  <div class="option" data-id="team-fertig" onclick="toggle(this)">
+    <div class="checkbox"><span class="checkmark">&#10003;</span></div>
+    <span class="option-text">Komplettes Mitarbeiter-Team fertig erstellt</span>
+  </div>
+
+  <div class="option" data-id="weiterbildung" onclick="toggle(this)">
+    <div class="checkbox"><span class="checkmark">&#10003;</span></div>
+    <span class="option-text">Mitarbeiter-Weiterbildung</span>
+  </div>
+
+  <div class="divider"></div>
+  <div class="section-label">Content und Sichtbarkeit</div>
+
+  <div class="option" data-id="business-fotos" onclick="toggle(this)">
+    <div class="checkbox"><span class="checkmark">&#10003;</span></div>
+    <span class="option-text">KI Business-Fotos</span>
+  </div>
+
+  <div class="option" data-id="content-autopilot" onclick="toggle(this)">
+    <div class="checkbox"><span class="checkmark">&#10003;</span></div>
+    <span class="option-text">Content auf Autopilot</span>
+  </div>
+
+  <div class="option" data-id="instagram-strategie" onclick="toggle(this)">
+    <div class="checkbox"><span class="checkmark">&#10003;</span></div>
+    <span class="option-text">Instagram-Strategie mit KI</span>
+  </div>
+
+  <div class="option" data-id="canva-ki" onclick="toggle(this)">
+    <div class="checkbox"><span class="checkmark">&#10003;</span></div>
+    <span class="option-text">Canva + KI Workflows</span>
+  </div>
+
+  <div class="divider"></div>
+  <div class="section-label">Extras</div>
+
+  <div class="option" data-id="youtube-check" onclick="toggle(this)">
+    <div class="checkbox"><span class="checkmark">&#10003;</span></div>
+    <span class="option-text">Youtube-Check</span>
+  </div>
+
+  <div class="option" data-id="newsletter-ki" onclick="toggle(this)">
+    <div class="checkbox"><span class="checkmark">&#10003;</span></div>
+    <span class="option-text">Newsletter mit KI schreiben</span>
+  </div>
+
+  <div class="results-panel">
+    <div class="results-title">Live-Ergebnisse</div>
+    <div id="results"></div>
+    <div class="total">Insgesamt <span id="total-count">0</span> Stimmen</div>
+    <button class="reset-btn" onclick="resetAll()">Zurücksetzen</button>
+  </div>
+</div>
+
+<script>
+const votes = {};
+
+document.querySelectorAll('.option').forEach(el => {
+  votes[el.dataset.id] = { label: el.querySelector('.option-text').textContent, count: 0 };
+});
+
+function toggle(el) {
+  el.classList.toggle('selected');
+  const id = el.dataset.id;
+  votes[id].count = el.classList.contains('selected') ? 1 : 0;
+  updateResults();
+}
+
+function updateResults() {
+  const container = document.getElementById('results');
+  const entries = Object.values(votes).filter(v => v.count > 0);
+  const total = entries.length;
+  document.getElementById('total-count').textContent = total;
+
+  const sorted = Object.entries(votes)
+    .sort((a, b) => b[1].count - a[1].count)
+    .filter(([, v]) => v.count > 0);
+
+  if (sorted.length === 0) {
+    container.innerHTML = '<p style="text-align:center;color:rgba(196,168,130,0.4);font-size:0.9rem;">Noch keine Auswahl getroffen</p>';
+    return;
+  }
+
+  const maxCount = Math.max(...sorted.map(([, v]) => v.count));
+  container.innerHTML = sorted.map(([id, v]) => {
+    const pct = (v.count / maxCount) * 100;
+    return `
+      <div class="result-row">
+        <div class="result-bar-bg">
+          <div class="result-bar" style="width:${pct}%"></div>
+          <span class="result-label">${v.label}</span>
+        </div>
+        <span class="result-count">${v.count}</span>
+      </div>`;
+  }).join('');
+}
+
+function resetAll() {
+  document.querySelectorAll('.option').forEach(el => {
+    el.classList.remove('selected');
+  });
+  Object.keys(votes).forEach(k => votes[k].count = 0);
+  updateResults();
+}
+
+updateResults();
+</script>
+
+</body>
+</html>
