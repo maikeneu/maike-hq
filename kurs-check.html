@@ -214,7 +214,7 @@
   }
 
   .result-count {
-    min-width: 36px;
+    min-width: 44px;
     text-align: right;
     font-weight: 600;
     color: var(--latte);
@@ -251,6 +251,42 @@
     border-color: rgba(200,113,74,0.35);
     color: var(--t1);
   }
+
+  .live-badge {
+    display: inline-block;
+    background: var(--t2);
+    color: var(--w0);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-left: 8px;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  /* Admin-Ansicht */
+  body.admin-view .voting-section { display: none; }
+  body.admin-view .results-panel {
+    margin-top: 0;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+  body.admin-view .results-title { font-size: 1.4rem; margin-bottom: 24px; }
+  body.admin-view .result-bar-bg { height: 44px; }
+  body.admin-view .result-label { font-size: 1rem; }
+  body.admin-view .result-count { font-size: 1.1rem; min-width: 52px; }
+  body.admin-view .result-row { margin-bottom: 14px; }
+  body.admin-view h1 { font-size: 2.4rem; margin-bottom: 12px; }
+  body.admin-view .subtitle { margin-bottom: 48px; }
 </style>
 </head>
 <body>
@@ -259,137 +295,183 @@
   <h1>Welcher Kurs hilft dir am meisten?</h1>
   <p class="subtitle">Klicke alles an, was dich interessiert. Mehrfachauswahl erlaubt.</p>
 
-  <div class="section-label">Grundlagen</div>
+  <div class="voting-section">
+    <div class="section-label">Grundlagen</div>
 
-  <div class="option" data-id="zweites-gehirn" onclick="toggle(this)">
-    <div class="checkbox"><span class="checkmark">&#10003;</span></div>
-    <span class="option-text">Das zweite Gehirn erstellen</span>
-  </div>
+    <div class="option" data-id="zweites-gehirn" onclick="toggle(this)">
+      <div class="checkbox"><span class="checkmark">&#10003;</span></div>
+      <span class="option-text">Das zweite Gehirn erstellen</span>
+    </div>
 
-  <div class="option" data-id="bibliothek" onclick="toggle(this)">
-    <div class="checkbox"><span class="checkmark">&#10003;</span></div>
-    <span class="option-text">Die grösste Bibliothek deines Lebens</span>
-  </div>
+    <div class="option" data-id="bibliothek" onclick="toggle(this)">
+      <div class="checkbox"><span class="checkmark">&#10003;</span></div>
+      <span class="option-text">Die groesste Bibliothek deines Lebens</span>
+    </div>
 
-  <div class="option" data-id="ki-stimme" onclick="toggle(this)">
-    <div class="checkbox"><span class="checkmark">&#10003;</span></div>
-    <span class="option-text">Deine KI-Stimme finden</span>
-  </div>
+    <div class="option" data-id="ki-stimme" onclick="toggle(this)">
+      <div class="checkbox"><span class="checkmark">&#10003;</span></div>
+      <span class="option-text">Deine KI-Stimme finden</span>
+    </div>
 
-  <div class="divider"></div>
-  <div class="section-label">KI-Mitarbeiter</div>
+    <div class="divider"></div>
+    <div class="section-label">KI-Mitarbeiter</div>
 
-  <div class="option" data-id="mitarbeiter-selbst" onclick="toggle(this)">
-    <div class="checkbox"><span class="checkmark">&#10003;</span></div>
-    <span class="option-text">Mitarbeiter selbst erstellen</span>
-  </div>
+    <div class="option" data-id="mitarbeiter-selbst" onclick="toggle(this)">
+      <div class="checkbox"><span class="checkmark">&#10003;</span></div>
+      <span class="option-text">Mitarbeiter selbst erstellen</span>
+    </div>
 
-  <div class="option" data-id="team-fertig" onclick="toggle(this)">
-    <div class="checkbox"><span class="checkmark">&#10003;</span></div>
-    <span class="option-text">Komplettes Mitarbeiter-Team fertig erstellt</span>
-  </div>
+    <div class="option" data-id="team-fertig" onclick="toggle(this)">
+      <div class="checkbox"><span class="checkmark">&#10003;</span></div>
+      <span class="option-text">Komplettes Mitarbeiter-Team fertig erstellt</span>
+    </div>
 
-  <div class="option" data-id="weiterbildung" onclick="toggle(this)">
-    <div class="checkbox"><span class="checkmark">&#10003;</span></div>
-    <span class="option-text">Mitarbeiter-Weiterbildung</span>
-  </div>
+    <div class="option" data-id="weiterbildung" onclick="toggle(this)">
+      <div class="checkbox"><span class="checkmark">&#10003;</span></div>
+      <span class="option-text">Mitarbeiter-Weiterbildung</span>
+    </div>
 
-  <div class="divider"></div>
-  <div class="section-label">Content und Sichtbarkeit</div>
+    <div class="divider"></div>
+    <div class="section-label">Content und Sichtbarkeit</div>
 
-  <div class="option" data-id="business-fotos" onclick="toggle(this)">
-    <div class="checkbox"><span class="checkmark">&#10003;</span></div>
-    <span class="option-text">KI Business-Fotos</span>
-  </div>
+    <div class="option" data-id="business-fotos" onclick="toggle(this)">
+      <div class="checkbox"><span class="checkmark">&#10003;</span></div>
+      <span class="option-text">KI Business-Fotos</span>
+    </div>
 
-  <div class="option" data-id="content-autopilot" onclick="toggle(this)">
-    <div class="checkbox"><span class="checkmark">&#10003;</span></div>
-    <span class="option-text">Content auf Autopilot</span>
-  </div>
+    <div class="option" data-id="content-autopilot" onclick="toggle(this)">
+      <div class="checkbox"><span class="checkmark">&#10003;</span></div>
+      <span class="option-text">Content auf Autopilot</span>
+    </div>
 
-  <div class="option" data-id="instagram-strategie" onclick="toggle(this)">
-    <div class="checkbox"><span class="checkmark">&#10003;</span></div>
-    <span class="option-text">Instagram-Strategie mit KI</span>
-  </div>
+    <div class="option" data-id="instagram-strategie" onclick="toggle(this)">
+      <div class="checkbox"><span class="checkmark">&#10003;</span></div>
+      <span class="option-text">Instagram-Strategie mit KI</span>
+    </div>
 
-  <div class="option" data-id="canva-ki" onclick="toggle(this)">
-    <div class="checkbox"><span class="checkmark">&#10003;</span></div>
-    <span class="option-text">Canva + KI Workflows</span>
-  </div>
+    <div class="option" data-id="canva-ki" onclick="toggle(this)">
+      <div class="checkbox"><span class="checkmark">&#10003;</span></div>
+      <span class="option-text">Canva + KI Workflows</span>
+    </div>
 
-  <div class="divider"></div>
-  <div class="section-label">Extras</div>
+    <div class="divider"></div>
+    <div class="section-label">Extras</div>
 
-  <div class="option" data-id="youtube-check" onclick="toggle(this)">
-    <div class="checkbox"><span class="checkmark">&#10003;</span></div>
-    <span class="option-text">Youtube-Check</span>
-  </div>
+    <div class="option" data-id="youtube-check" onclick="toggle(this)">
+      <div class="checkbox"><span class="checkmark">&#10003;</span></div>
+      <span class="option-text">Youtube-Check</span>
+    </div>
 
-  <div class="option" data-id="newsletter-ki" onclick="toggle(this)">
-    <div class="checkbox"><span class="checkmark">&#10003;</span></div>
-    <span class="option-text">Newsletter mit KI schreiben</span>
+    <div class="option" data-id="newsletter-ki" onclick="toggle(this)">
+      <div class="checkbox"><span class="checkmark">&#10003;</span></div>
+      <span class="option-text">Newsletter mit KI schreiben</span>
+    </div>
   </div>
 
   <div class="results-panel">
-    <div class="results-title">Live-Ergebnisse</div>
+    <div class="results-title">Live-Ergebnisse <span class="live-badge">Live</span></div>
     <div id="results"></div>
-    <div class="total">Insgesamt <span id="total-count">0</span> Stimmen</div>
-    <button class="reset-btn" onclick="resetAll()">Zurücksetzen</button>
+    <div class="total"><span id="voter-count">0</span> Teilnehmer haben abgestimmt</div>
   </div>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <script>
-const votes = {};
+// ============================================================
+// FIREBASE CONFIG — hier deine Werte eintragen
+// ============================================================
+const firebaseConfig = {
+  apiKey: "AIzaSyABPKxihOiA1OrZ5P-5a9VKEjx52Krwq5g",
+  authDomain: "webinar-kurs-check.firebaseapp.com",
+  databaseURL: "https://webinar-kurs-check-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "webinar-kurs-check"
+};
+// ============================================================
 
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+const isAdmin = new URLSearchParams(window.location.search).has('admin');
+if (isAdmin) document.body.classList.add('admin-view');
+
+let sessionId = localStorage.getItem('kurs-check-session');
+if (!sessionId) {
+  sessionId = crypto.randomUUID();
+  localStorage.setItem('kurs-check-session', sessionId);
+}
+
+const optionLabels = {};
 document.querySelectorAll('.option').forEach(el => {
-  votes[el.dataset.id] = { label: el.querySelector('.option-text').textContent, count: 0 };
+  optionLabels[el.dataset.id] = el.querySelector('.option-text').textContent;
 });
 
 function toggle(el) {
   el.classList.toggle('selected');
   const id = el.dataset.id;
-  votes[id].count = el.classList.contains('selected') ? 1 : 0;
-  updateResults();
+  const selected = el.classList.contains('selected');
+
+  if (selected) {
+    db.ref('votes/' + sessionId + '/' + id).set(true);
+  } else {
+    db.ref('votes/' + sessionId + '/' + id).remove();
+  }
 }
 
-function updateResults() {
+db.ref('votes').on('value', (snapshot) => {
+  const allVotes = snapshot.val() || {};
+  const counts = {};
+  let voterCount = 0;
+
+  Object.keys(optionLabels).forEach(id => { counts[id] = 0; });
+
+  Object.values(allVotes).forEach(userVotes => {
+    voterCount++;
+    Object.keys(userVotes).forEach(optionId => {
+      if (counts[optionId] !== undefined) {
+        counts[optionId]++;
+      }
+    });
+  });
+
+  document.getElementById('voter-count').textContent = voterCount;
+  renderResults(counts);
+});
+
+function renderResults(counts) {
   const container = document.getElementById('results');
-  const entries = Object.values(votes).filter(v => v.count > 0);
-  const total = entries.length;
-  document.getElementById('total-count').textContent = total;
+  const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  const maxCount = Math.max(...sorted.map(([, c]) => c), 1);
 
-  const sorted = Object.entries(votes)
-    .sort((a, b) => b[1].count - a[1].count)
-    .filter(([, v]) => v.count > 0);
-
-  if (sorted.length === 0) {
-    container.innerHTML = '<p style="text-align:center;color:rgba(196,168,130,0.4);font-size:0.9rem;">Noch keine Auswahl getroffen</p>';
+  if (sorted.every(([, c]) => c === 0)) {
+    container.innerHTML = '<p style="text-align:center;color:rgba(196,168,130,0.4);font-size:0.9rem;">Noch keine Stimmen</p>';
     return;
   }
 
-  const maxCount = Math.max(...sorted.map(([, v]) => v.count));
-  container.innerHTML = sorted.map(([id, v]) => {
-    const pct = (v.count / maxCount) * 100;
-    return `
-      <div class="result-row">
-        <div class="result-bar-bg">
-          <div class="result-bar" style="width:${pct}%"></div>
-          <span class="result-label">${v.label}</span>
-        </div>
-        <span class="result-count">${v.count}</span>
-      </div>`;
-  }).join('');
+  container.innerHTML = sorted
+    .filter(([, c]) => c > 0)
+    .map(([id, count]) => {
+      const pct = (count / maxCount) * 100;
+      const label = optionLabels[id] || id;
+      return '<div class="result-row">'
+        + '<div class="result-bar-bg">'
+        + '<div class="result-bar" style="width:' + pct + '%"></div>'
+        + '<span class="result-label">' + label + '</span>'
+        + '</div>'
+        + '<span class="result-count">' + count + '</span>'
+        + '</div>';
+    }).join('');
 }
 
-function resetAll() {
+// Eigene Auswahl beim Laden wiederherstellen
+db.ref('votes/' + sessionId).once('value', (snapshot) => {
+  const myVotes = snapshot.val() || {};
   document.querySelectorAll('.option').forEach(el => {
-    el.classList.remove('selected');
+    if (myVotes[el.dataset.id]) {
+      el.classList.add('selected');
+    }
   });
-  Object.keys(votes).forEach(k => votes[k].count = 0);
-  updateResults();
-}
-
-updateResults();
+});
 </script>
 
 </body>
